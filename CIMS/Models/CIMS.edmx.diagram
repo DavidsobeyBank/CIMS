@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="565c106aace748d3b2fecfc79957210c" Name="Diagram1">
+        <EntityTypeShape EntityType="CIMS_NEWModel.Action" Width="1.5" PointX="3" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="CIMS_NEWModel.Branch" Width="1.5" PointX="3.75" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CIMS_NEWModel.Client" Width="1.5" PointX="3.75" PointY="13.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CIMS_NEWModel.Currency" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CIMS_NEWModel.Instruction" Width="1.5" PointX="6" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CIMS_NEWModel.InstructionType" Width="1.5" PointX="3.75" PointY="17.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CIMS_NEWModel.Role" Width="1.5" PointX="0.75" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CIMS_NEWModel.Status" Width="1.5" PointX="0.75" PointY="14.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CIMS_NEWModel.sysdiagram" Width="1.5" PointX="5.75" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="CIMS_NEWModel.User" Width="1.5" PointX="0.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CIMS_NEWModel.UserRole" Width="1.5" PointX="3" PointY="3.375" IsExpanded="true" />
+        <AssociationConnector Association="CIMS_NEWModel.FK_Action_Instruction" ManuallyRouted="false" />
+        <AssociationConnector Association="CIMS_NEWModel.FK_Action_Status" ManuallyRouted="false" />
+        <AssociationConnector Association="CIMS_NEWModel.FK_Action_User" ManuallyRouted="false" />
+        <AssociationConnector Association="CIMS_NEWModel.FK_Instruction_Branch" ManuallyRouted="false" />
+        <AssociationConnector Association="CIMS_NEWModel.FK_Instruction_Client" ManuallyRouted="false" />
+        <AssociationConnector Association="CIMS_NEWModel.FK_Instruction_Currency" ManuallyRouted="false" />
+        <AssociationConnector Association="CIMS_NEWModel.FK_Instruction_Currency1" ManuallyRouted="false" />
+        <AssociationConnector Association="CIMS_NEWModel.FK_Instruction_InstructionType" ManuallyRouted="false" />
+        <AssociationConnector Association="CIMS_NEWModel.FK_Instruction_User" ManuallyRouted="false" />
+        <AssociationConnector Association="CIMS_NEWModel.FK_Instruction_User1" ManuallyRouted="false" />
+        <AssociationConnector Association="CIMS_NEWModel.FK_Instruction_User2" ManuallyRouted="false" />
+        <AssociationConnector Association="CIMS_NEWModel.FK_Status_InstructionType1" ManuallyRouted="false" />
+        <AssociationConnector Association="CIMS_NEWModel.FK_UserRole_Role" ManuallyRouted="false" />
+        <AssociationConnector Association="CIMS_NEWModel.FK_UserRole_User" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
