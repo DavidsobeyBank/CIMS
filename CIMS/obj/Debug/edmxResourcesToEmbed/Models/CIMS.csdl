@@ -91,6 +91,7 @@
     <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="RoleDescription" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
     <NavigationProperty Name="UserRoles" Relationship="Self.FK_UserRole_Role" FromRole="Role" ToRole="UserRole" />
+    <NavigationProperty Name="Status" Relationship="CIMS_NEWModel.FK_Status_Role" FromRole="Role" ToRole="Status" />
   </EntityType>
   <EntityType Name="Status">
     <Key>
@@ -102,6 +103,8 @@
     <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <NavigationProperty Name="Actions" Relationship="Self.FK_Action_Status" FromRole="Status" ToRole="Action" />
     <NavigationProperty Name="InstructionType" Relationship="Self.FK_Status_InstructionType1" FromRole="Status" ToRole="InstructionType" />
+    <Property Name="RoleID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Role" Relationship="CIMS_NEWModel.FK_Status_Role" FromRole="Status" ToRole="Role" />
   </EntityType>
   <EntityType Name="sysdiagram">
     <Key>
@@ -128,6 +131,7 @@
     <NavigationProperty Name="Instructions1" Relationship="Self.FK_Instruction_User1" FromRole="User" ToRole="Instruction" />
     <NavigationProperty Name="Instructions2" Relationship="Self.FK_Instruction_User2" FromRole="User" ToRole="Instruction" />
     <NavigationProperty Name="UserRoles" Relationship="Self.FK_UserRole_User" FromRole="User" ToRole="UserRole" />
+    <Property Name="Username" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="UserRole">
     <Key>
@@ -375,5 +379,21 @@
       <End Role="User" EntitySet="Users" />
       <End Role="UserRole" EntitySet="UserRoles" />
     </AssociationSet>
+    <AssociationSet Name="FK_Status_Role" Association="CIMS_NEWModel.FK_Status_Role">
+      <End Role="Role" EntitySet="Roles" />
+      <End Role="Status" EntitySet="Status" />
+    </AssociationSet>
   </EntityContainer>
+  <Association Name="FK_Status_Role">
+    <End Type="CIMS_NEWModel.Role" Role="Role" Multiplicity="1" />
+    <End Type="CIMS_NEWModel.Status" Role="Status" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="RoleID" />
+      </Principal>
+      <Dependent Role="Status">
+        <PropertyRef Name="RoleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

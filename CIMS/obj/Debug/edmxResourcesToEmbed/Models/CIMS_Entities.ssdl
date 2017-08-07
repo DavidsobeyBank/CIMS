@@ -1,0 +1,383 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="CIMS_NEWModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Action">
+    <Key>
+      <PropertyRef Name="ActionID" />
+    </Key>
+    <Property Name="ActionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Comment" Type="varchar(max)" Nullable="false" />
+    <Property Name="ActionDate" Type="datetime" Nullable="false" />
+    <Property Name="InstructionID" Type="int" Nullable="false" />
+    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="StatusID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Branch">
+    <Key>
+      <PropertyRef Name="BranchID" />
+    </Key>
+    <Property Name="BranchID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BranchName" Type="varchar" MaxLength="255" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Client">
+    <Key>
+      <PropertyRef Name="ClientID" />
+    </Key>
+    <Property Name="ClientID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="AccountNumber" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="Portfolo" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="Sector" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="Active" Type="bit" Nullable="false" />
+    <Property Name="CustomerNumber" Type="varchar" MaxLength="255" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Currency">
+    <Key>
+      <PropertyRef Name="CurrencyID" />
+    </Key>
+    <Property Name="CurrencyID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CurrencyName" Type="varchar" MaxLength="255" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Instruction">
+    <Key>
+      <PropertyRef Name="InstructionID" />
+    </Key>
+    <Property Name="InstructionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="InstructionTypeID" Type="int" Nullable="false" />
+    <Property Name="CreateDate" Type="datetime" Nullable="false" />
+    <Property Name="CreateUser" Type="int" Nullable="false" />
+    <Property Name="StatusID" Type="int" Nullable="false" />
+    <Property Name="FromUser" Type="int" Nullable="false" />
+    <Property Name="ToUser" Type="int" Nullable="false" />
+    <Property Name="Amount" Type="float" Nullable="false" />
+    <Property Name="ClientID" Type="int" Nullable="false" />
+    <Property Name="CurrencyFrom" Type="int" Nullable="false" />
+    <Property Name="CurrencyTo" Type="int" Nullable="false" />
+    <Property Name="BranchID" Type="int" Nullable="false" />
+    <Property Name="EERef" Type="varchar" MaxLength="255" Nullable="false" />
+  </EntityType>
+  <EntityType Name="InstructionCurrency">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CurrencyID" Type="int" Nullable="false" />
+    <Property Name="InstructionID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="InstructionType">
+    <Key>
+      <PropertyRef Name="InstructionTypeID" />
+    </Key>
+    <Property Name="InstructionTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="Description" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="Cutoff" Type="time" Precision="7" Nullable="false" />
+    <Property Name="Active" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="RoleID" />
+    </Key>
+    <Property Name="RoleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RoleName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="RoleDescription" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="Active" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Status">
+    <Key>
+      <PropertyRef Name="StatusID" />
+    </Key>
+    <Property Name="StatusID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="InstructionTypeID" Type="int" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Description" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="RoleID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="Surname" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="Email" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="Approved" Type="int" />
+    <Property Name="Active" Type="bit" Nullable="false" />
+    <Property Name="Username" Type="varchar" MaxLength="255" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'CIMS_NEW.dbo.UserInstruction' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="UserInstruction">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="UserID" />
+      <PropertyRef Name="InstructionID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="InstructionID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UserRole">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="RoleID" Type="int" Nullable="false" />
+    <Property Name="Active" Type="bit" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Action_Instruction">
+    <End Role="Instruction" Type="Self.Instruction" Multiplicity="1" />
+    <End Role="Action" Type="Self.Action" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Instruction">
+        <PropertyRef Name="InstructionID" />
+      </Principal>
+      <Dependent Role="Action">
+        <PropertyRef Name="InstructionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Action_Status">
+    <End Role="Status" Type="Self.Status" Multiplicity="1" />
+    <End Role="Action" Type="Self.Action" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Status">
+        <PropertyRef Name="StatusID" />
+      </Principal>
+      <Dependent Role="Action">
+        <PropertyRef Name="StatusID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Action_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="Action" Type="Self.Action" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Action">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Instruction_Branch">
+    <End Role="Branch" Type="Self.Branch" Multiplicity="1" />
+    <End Role="Instruction" Type="Self.Instruction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Branch">
+        <PropertyRef Name="BranchID" />
+      </Principal>
+      <Dependent Role="Instruction">
+        <PropertyRef Name="BranchID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Instruction_Client">
+    <End Role="Client" Type="Self.Client" Multiplicity="1" />
+    <End Role="Instruction" Type="Self.Instruction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Client">
+        <PropertyRef Name="ClientID" />
+      </Principal>
+      <Dependent Role="Instruction">
+        <PropertyRef Name="ClientID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Instruction_InstructionType">
+    <End Role="InstructionType" Type="Self.InstructionType" Multiplicity="1" />
+    <End Role="Instruction" Type="Self.Instruction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="InstructionType">
+        <PropertyRef Name="InstructionTypeID" />
+      </Principal>
+      <Dependent Role="Instruction">
+        <PropertyRef Name="InstructionTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InstructionCurrency_Currency">
+    <End Role="Currency" Type="Self.Currency" Multiplicity="1" />
+    <End Role="InstructionCurrency" Type="Self.InstructionCurrency" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Currency">
+        <PropertyRef Name="CurrencyID" />
+      </Principal>
+      <Dependent Role="InstructionCurrency">
+        <PropertyRef Name="CurrencyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InstructionCurrency_Instruction">
+    <End Role="Instruction" Type="Self.Instruction" Multiplicity="1" />
+    <End Role="InstructionCurrency" Type="Self.InstructionCurrency" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Instruction">
+        <PropertyRef Name="InstructionID" />
+      </Principal>
+      <Dependent Role="InstructionCurrency">
+        <PropertyRef Name="InstructionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Status_InstructionType1">
+    <End Role="InstructionType" Type="Self.InstructionType" Multiplicity="1" />
+    <End Role="Status" Type="Self.Status" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="InstructionType">
+        <PropertyRef Name="InstructionTypeID" />
+      </Principal>
+      <Dependent Role="Status">
+        <PropertyRef Name="InstructionTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Status_Role">
+    <End Role="Role" Type="Self.Role" Multiplicity="1" />
+    <End Role="Status" Type="Self.Status" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="RoleID" />
+      </Principal>
+      <Dependent Role="Status">
+        <PropertyRef Name="RoleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserInstruction_Instruction">
+    <End Role="Instruction" Type="Self.Instruction" Multiplicity="1" />
+    <End Role="UserInstruction" Type="Self.UserInstruction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Instruction">
+        <PropertyRef Name="InstructionID" />
+      </Principal>
+      <Dependent Role="UserInstruction">
+        <PropertyRef Name="InstructionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserInstruction_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="UserInstruction" Type="Self.UserInstruction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="UserInstruction">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserRole_Role">
+    <End Role="Role" Type="Self.Role" Multiplicity="1" />
+    <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="RoleID" />
+      </Principal>
+      <Dependent Role="UserRole">
+        <PropertyRef Name="RoleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserRole_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="UserRole">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="CIMS_NEWModelStoreContainer">
+    <EntitySet Name="Action" EntityType="Self.Action" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Branch" EntityType="Self.Branch" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Currency" EntityType="Self.Currency" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Instruction" EntityType="Self.Instruction" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="InstructionCurrency" EntityType="Self.InstructionCurrency" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="InstructionType" EntityType="Self.InstructionType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserInstruction" EntityType="Self.UserInstruction" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [UserInstruction].[ID] AS [ID], 
+    [UserInstruction].[UserID] AS [UserID], 
+    [UserInstruction].[InstructionID] AS [InstructionID]
+    FROM [dbo].[UserInstruction] AS [UserInstruction]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_Action_Instruction" Association="Self.FK_Action_Instruction">
+      <End Role="Instruction" EntitySet="Instruction" />
+      <End Role="Action" EntitySet="Action" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Action_Status" Association="Self.FK_Action_Status">
+      <End Role="Status" EntitySet="Status" />
+      <End Role="Action" EntitySet="Action" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Action_User" Association="Self.FK_Action_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="Action" EntitySet="Action" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Instruction_Branch" Association="Self.FK_Instruction_Branch">
+      <End Role="Branch" EntitySet="Branch" />
+      <End Role="Instruction" EntitySet="Instruction" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Instruction_Client" Association="Self.FK_Instruction_Client">
+      <End Role="Client" EntitySet="Client" />
+      <End Role="Instruction" EntitySet="Instruction" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Instruction_InstructionType" Association="Self.FK_Instruction_InstructionType">
+      <End Role="InstructionType" EntitySet="InstructionType" />
+      <End Role="Instruction" EntitySet="Instruction" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InstructionCurrency_Currency" Association="Self.FK_InstructionCurrency_Currency">
+      <End Role="Currency" EntitySet="Currency" />
+      <End Role="InstructionCurrency" EntitySet="InstructionCurrency" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InstructionCurrency_Instruction" Association="Self.FK_InstructionCurrency_Instruction">
+      <End Role="Instruction" EntitySet="Instruction" />
+      <End Role="InstructionCurrency" EntitySet="InstructionCurrency" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Status_InstructionType1" Association="Self.FK_Status_InstructionType1">
+      <End Role="InstructionType" EntitySet="InstructionType" />
+      <End Role="Status" EntitySet="Status" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Status_Role" Association="Self.FK_Status_Role">
+      <End Role="Role" EntitySet="Role" />
+      <End Role="Status" EntitySet="Status" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserInstruction_Instruction" Association="Self.FK_UserInstruction_Instruction">
+      <End Role="Instruction" EntitySet="Instruction" />
+      <End Role="UserInstruction" EntitySet="UserInstruction" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserInstruction_User" Association="Self.FK_UserInstruction_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="UserInstruction" EntitySet="UserInstruction" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserRole_Role" Association="Self.FK_UserRole_Role">
+      <End Role="Role" EntitySet="Role" />
+      <End Role="UserRole" EntitySet="UserRole" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserRole_User" Association="Self.FK_UserRole_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="UserRole" EntitySet="UserRole" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

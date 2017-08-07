@@ -17,16 +17,13 @@ namespace CIMS.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Currency()
         {
-            this.Instructions = new HashSet<Instruction>();
-            this.Instructions1 = new HashSet<Instruction>();
+            this.InstructionCurrencies = new HashSet<InstructionCurrency>();
         }
     
         public int CurrencyID { get; set; }
         public string CurrencyName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Instruction> Instructions { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Instruction> Instructions1 { get; set; }
+        public virtual ICollection<InstructionCurrency> InstructionCurrencies { get; set; }
     }
 }

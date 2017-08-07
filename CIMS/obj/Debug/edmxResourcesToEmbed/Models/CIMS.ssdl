@@ -81,6 +81,7 @@
     <Property Name="InstructionTypeID" Type="int" Nullable="false" />
     <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="Description" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="RoleID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="sysdiagrams">
     <Key>
@@ -102,6 +103,7 @@
     <Property Name="Email" Type="varchar" MaxLength="255" Nullable="false" />
     <Property Name="Approved" Type="int" />
     <Property Name="Active" Type="bit" Nullable="false" />
+    <Property Name="Username" Type="varchar" MaxLength="255" />
   </EntityType>
   <EntityType Name="UserRole">
     <Key>
@@ -255,6 +257,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Status_Role">
+    <End Role="Role" Type="Self.Role" Multiplicity="1" />
+    <End Role="Status" Type="Self.Status" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="RoleID" />
+      </Principal>
+      <Dependent Role="Status">
+        <PropertyRef Name="RoleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_UserRole_Role">
     <End Role="Role" Type="Self.Role" Multiplicity="1" />
     <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
@@ -337,6 +351,10 @@
     </AssociationSet>
     <AssociationSet Name="FK_Status_InstructionType1" Association="Self.FK_Status_InstructionType1">
       <End Role="InstructionType" EntitySet="InstructionType" />
+      <End Role="Status" EntitySet="Status" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Status_Role" Association="Self.FK_Status_Role">
+      <End Role="Role" EntitySet="Role" />
       <End Role="Status" EntitySet="Status" />
     </AssociationSet>
     <AssociationSet Name="FK_UserRole_Role" Association="Self.FK_UserRole_Role">

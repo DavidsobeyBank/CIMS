@@ -24,9 +24,11 @@ namespace CIMS.Models
         public int InstructionTypeID { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+        public int RoleID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Action> Actions { get; set; }
         public virtual InstructionType InstructionType { get; set; }
+        public virtual Role Role { get; set; }
     }
 }

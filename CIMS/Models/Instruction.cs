@@ -18,6 +18,8 @@ namespace CIMS.Models
         public Instruction()
         {
             this.Actions = new HashSet<Action>();
+            this.InstructionCurrencies = new HashSet<InstructionCurrency>();
+            this.UserInstructions = new HashSet<UserInstruction>();
         }
     
         public int InstructionID { get; set; }
@@ -38,11 +40,10 @@ namespace CIMS.Models
         public virtual ICollection<Action> Actions { get; set; }
         public virtual Branch Branch { get; set; }
         public virtual Client Client { get; set; }
-        public virtual Currency Currency { get; set; }
-        public virtual Currency Currency1 { get; set; }
         public virtual InstructionType InstructionType { get; set; }
-        public virtual User User { get; set; }
-        public virtual User User1 { get; set; }
-        public virtual User User2 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<InstructionCurrency> InstructionCurrencies { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserInstruction> UserInstructions { get; set; }
     }
 }

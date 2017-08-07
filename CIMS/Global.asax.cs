@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using System.Web.Security;
 
 namespace CIMS
 {
@@ -19,11 +20,6 @@ namespace CIMS
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
 
-        public bool checkUser()
-        {
-            bool check = false;
-            WindowsIdentity clientId = (WindowsIdentity)HttpContext.Current.User.Identity;
-            return check;
-        }
+        
     }
 }
