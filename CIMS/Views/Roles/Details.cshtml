@@ -5,26 +5,22 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
+<h2>Role Details</h2>
 
 <div>
-    <h4>Role</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.RoleName)
+            <label class="control-label col">Role Name</label>
         </dt>
-
         <dd>
-            @Html.DisplayFor(model => model.RoleName)
+            <label class="control-label col">@Html.DisplayFor(model => model.RoleName)</label>
         </dd>
-
         <dt>
-            @Html.DisplayNameFor(model => model.RoleDescription)
+            <label class="control-label col">Role Description</label>
         </dt>
-
         <dd>
-            @Html.DisplayFor(model => model.RoleDescription)
+            <label class="control-label col">@Html.DisplayFor(model => model.RoleDescription)</label>
         </dd>
 
     </dl>

@@ -84,6 +84,7 @@ namespace CIMS.Controllers
             if (ModelState.IsValid)
             {
                 db.Entry(role).State = EntityState.Modified;
+                role.Active = true;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -121,6 +122,39 @@ namespace CIMS.Controllers
             {
                 UR.Active = false;
             }
+
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public ActionResult Activate()
+        {
+            List<Role> roles = (from role in db.Roles
+                                where role.Active == false
+                                select role).ToList();
+
+            return View(roles);
+        }
+
+        // POST: Roles/Delete/5
+        [HttpPost, ActionName("Activate")]
+        [ValidateAntiForgeryToken]
+        public ActionResult Activate(int id)
+        {
+            Role role = db.Roles.Find(id);
+            role.Active = true;
+
+            //List<UserRole> results = (from UserRole in db.UserRoles
+            //                          where UserRole.RoleID == role.RoleID
+            //                          select UserRole).ToList();
+
+            //foreach (UserRole UR in results)
+            //{
+            //    UR.Active = true;
+            //}
+
+            //db.Entry(role).State = EntityState.Modified;
 
             db.SaveChanges();
             return RedirectToAction("Index");

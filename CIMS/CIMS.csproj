@@ -715,6 +715,7 @@
     <Content Include="Views\InstructionTypes\Details.cshtml" />
     <Content Include="Views\InstructionTypes\Edit.cshtml" />
     <Content Include="Views\InstructionTypes\Index.cshtml" />
+    <Content Include="Views\Roles\Activate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
