@@ -17,7 +17,7 @@ namespace CIMS.Controllers
         // GET: InstructionTypes
         public ActionResult Index()
         {
-            return View(db.InstructionTypes.ToList());
+            return View(db.InstructionTypes.Where(I => I.Active).ToList());
         }
 
         // GET: InstructionTypes/Details/5
@@ -50,6 +50,7 @@ namespace CIMS.Controllers
         {
             if (ModelState.IsValid)
             {
+                instructionType.Active = true;
                 db.InstructionTypes.Add(instructionType);
                 db.SaveChanges();
                 return RedirectToAction("Index");

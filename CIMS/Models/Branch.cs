@@ -22,6 +22,7 @@ namespace CIMS.Models
     
         public int BranchID { get; set; }
         public string BranchName { get; set; }
+        public bool Active { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Instruction> Instructions { get; set; }

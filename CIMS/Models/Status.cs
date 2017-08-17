@@ -18,13 +18,15 @@ namespace CIMS.Models
         public Status()
         {
             this.Actions = new HashSet<Action>();
-            this.RoleStatus = new HashSet<RoleStatus>();
+            this.Status1 = new HashSet<Status>();
         }
     
         public int StatusID { get; set; }
         public int InstructionTypeID { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+        public bool Active { get; set; }
+        public int NextStatus { get; set; }
         public int RoleID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -32,6 +34,7 @@ namespace CIMS.Models
         public virtual InstructionType InstructionType { get; set; }
         public virtual Role Role { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RoleStatus> RoleStatus { get; set; }
+        public virtual ICollection<Status> Status1 { get; set; }
+        public virtual Status Status2 { get; set; }
     }
 }

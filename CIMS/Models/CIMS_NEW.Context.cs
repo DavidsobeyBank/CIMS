@@ -26,19 +26,16 @@ namespace CIMS.Models
         }
     
         public virtual DbSet<Action> Actions { get; set; }
+        public virtual DbSet<AuditLog> AuditLogs { get; set; }
         public virtual DbSet<Branch> Branches { get; set; }
         public virtual DbSet<Client> Clients { get; set; }
         public virtual DbSet<Currency> Currencies { get; set; }
         public virtual DbSet<Instruction> Instructions { get; set; }
-        public virtual DbSet<InstructionCurrency> InstructionCurrencies { get; set; }
         public virtual DbSet<InstructionType> InstructionTypes { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Status> Status { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserRole> UserRoles { get; set; }
-        public virtual DbSet<UserInstruction> UserInstructions { get; set; }
-        public virtual DbSet<AuditLog> AuditLogs { get; set; }
-        public virtual DbSet<RoleStatus> RoleStatus { get; set; }
     }
 }

@@ -18,9 +18,10 @@ namespace CIMS.Models
         public User()
         {
             this.Actions = new HashSet<Action>();
-            this.UserInstructions = new HashSet<UserInstruction>();
-            this.UserRoles = new HashSet<UserRole>();
             this.AuditLogs = new HashSet<AuditLog>();
+            this.Instructions = new HashSet<Instruction>();
+            this.Instructions1 = new HashSet<Instruction>();
+            this.UserRoles = new HashSet<UserRole>();
         }
     
         public int UserID { get; set; }
@@ -34,10 +35,12 @@ namespace CIMS.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Action> Actions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UserInstruction> UserInstructions { get; set; }
+        public virtual ICollection<AuditLog> AuditLogs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Instruction> Instructions { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Instruction> Instructions1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserRole> UserRoles { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AuditLog> AuditLogs { get; set; }
     }
 }

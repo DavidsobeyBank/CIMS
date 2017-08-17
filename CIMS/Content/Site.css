@@ -5,3 +5,17 @@ a {
 button {
     outline: none!important;
 }
+
+.btn-outline-secondary {
+    color: #000;
+    border-color: #090909;
+}
+.btn-outline-secondary:hover {
+    background-color: #757474;
+    border-color: #000;
+}
+.btnsmall {
+    width: 30px;
+    padding: 2px;
+    height: 30px;
+}

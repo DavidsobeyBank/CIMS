@@ -5,12 +5,29 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
+<h2>Instruction Status Details</h2>
 
 <div>
-    <h4>Status</h4>
+    <h4></h4>
     <hr />
     <dl class="dl-horizontal">
+
+        <dt>
+            Instruction Type
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.InstructionType.Name)
+        </dd>
+
+        <dt>
+            Role
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Role.RoleName)
+        </dd>
+
         <dt>
             @Html.DisplayNameFor(model => model.Name)
         </dt>
@@ -28,19 +45,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.InstructionType.Name)
+            Next Status
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.InstructionType.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Role.RoleName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Role.RoleName)
+            @Html.DisplayFor(model => model.Status2.Name)
         </dd>
 
     </dl>

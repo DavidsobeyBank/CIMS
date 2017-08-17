@@ -17,8 +17,7 @@ namespace CIMS.Controllers
         // GET: Status
         public ActionResult Index()
         {
-            var status = db.Status.Include(s => s.InstructionType).Include(s => s.Role);
-            return View(status.ToList());
+            return View(db.Status.Where(S => S.Active).ToList());
         }
 
         // GET: Status/Details/5
@@ -49,10 +48,12 @@ namespace CIMS.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "StatusID,InstructionTypeID,Name,Description,RoleID")] Status status)
+        public ActionResult Create([Bind(Include = "StatusID,InstructionTypeID,Name,Description,Active,RoleID")] Status status)
         {
             if (ModelState.IsValid)
             {
+                status.Active = true;
+                status.NextStatus = 1;
                 db.Status.Add(status);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -75,7 +76,16 @@ namespace CIMS.Controllers
             {
                 return HttpNotFound();
             }
+            List<Status> Statuses = new List<Status>();
+            foreach(Status S in db.Status.ToList())
+            {
+                if(status.InstructionTypeID == S.InstructionTypeID)
+                {
+                    Statuses.Add(S);
+                }
+            }
             ViewBag.InstructionTypeID = new SelectList(db.InstructionTypes, "InstructionTypeID", "Name", status.InstructionTypeID);
+            ViewBag.NextStatus = new SelectList(Statuses, "StatusID", "Name", status.NextStatus);
             ViewBag.RoleID = new SelectList(db.Roles, "RoleID", "RoleName", status.RoleID);
             return View(status);
         }
@@ -85,16 +95,16 @@ namespace CIMS.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "StatusID,InstructionTypeID,Name,Description,RoleID")] Status status)
+        public ActionResult Edit([Bind(Include = "StatusID,InstructionTypeID,Name,Description,Active,NextStatus")] Status status)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(status).State = EntityState.Modified;
+                status.Active = true;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
             ViewBag.InstructionTypeID = new SelectList(db.InstructionTypes, "InstructionTypeID", "Name", status.InstructionTypeID);
-            ViewBag.RoleID = new SelectList(db.Roles, "RoleID", "RoleName", status.RoleID);
             return View(status);
         }
 
@@ -119,7 +129,38 @@ namespace CIMS.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Status status = db.Status.Find(id);
-            db.Status.Remove(status);
+            status.Active = false;
+
+            List<Status> results = (from Status in db.Status
+                                      where Status.NextStatus == id
+                                      select Status).ToList();
+
+            foreach (Status s in results)
+            {
+                s.NextStatus = status.NextStatus;
+            }
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public ActionResult Activate()
+        {
+            List<Status> Status = (from status in db.Status
+                                where status.Active == false
+                                select status).ToList();
+
+            return View(Status);
+        }
+
+        // POST: Roles/Delete/5
+        [HttpPost, ActionName("Activate")]
+        [ValidateAntiForgeryToken]
+        public ActionResult Activate(int id)
+        {
+            Status status = db.Status.Find(id);
+            status.Active = true;
+
             db.SaveChanges();
             return RedirectToAction("Index");
         }

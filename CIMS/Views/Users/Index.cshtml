@@ -9,9 +9,9 @@
     <h2 class="d-inline">Index</h2>
 
     <p class="pull-right d-inline">
-        @Html.ActionLink("Create", "Create", null, new { @class = "btn btn-outline-primary" })
+        @Html.ActionLink("Create", "Create", null, new { @class = "btn btn-outline-success" })
         @Html.ActionLink("Reactivate", "Activate", null, new { @class = "btn btn-outline-primary" })
-        @Html.ActionLink("Approve", "Approve", null, new { @class = "btn btn-outline-primary" })
+        @Html.ActionLink("Approve", "Approve", null, new { @class = "btn btn-outline-secondary" })
     </p>
 </div>
 <table class="table">
@@ -31,7 +31,9 @@
         <th>
             @Html.DisplayNameFor(model => model.Username)
         </th>
-        <th></th>
+        <th>Edit</th>
+        <th>Info</th>
+        <th>Delete</th>
     </tr>
 
 @foreach (var item in Model) {
@@ -52,9 +54,22 @@
             @Html.DisplayFor(modelItem => item.Username)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.UserID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.UserID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.UserID })
+            <a href=@Url.Action("Edit", new { id = item.UserID }) class="btn btnsmall btn-primary" >
+                <i class="fa fa-pencil" aria-hidden="true"></i>
+            </a>
+        </td>
+        <td>
+            <a href=@Url.Action("Details", new { id = item.UserID }) class="btn btnsmall btn-secondary">
+                <i class="fa fa-info" aria-hidden="true"></i>
+            </a>
+        </td>
+        <td>
+            <a href=@Url.Action("Delete", new { id = item.UserID }) class="btn btnsmall btn-danger justify-content-center">
+                <i class="fa fa-trash" aria-hidden="true"></i>
+            </a>
+            @*@Html.ActionLink("Edit", "Edit", new { id = item.UserID }, new { @class = "btn btnsmall btn-outline-primary" } ) |*@
+            @*@Html.ActionLink("Details", "Details", new { id=item.UserID }) |*@
+            @*@Html.ActionLink("Delete", "Delete", new { id=item.UserID })*@
         </td>
     </tr>
 }
