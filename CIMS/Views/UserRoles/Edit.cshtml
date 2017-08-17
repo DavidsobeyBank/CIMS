@@ -1,0 +1,51 @@
+﻿@model IEnumerable<CIMS.ViewModel.UserRoleViewModel>
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Manage User Roles - @Model.First().User.Name @Model.First().User.Surname</h2>
+<table class="table">
+    <tr>
+        <th>
+            Role Name
+        </th>
+        <th>
+            Role Description
+        </th>
+        <th>
+        </th>
+    </tr>
+    @foreach (var item in Model)
+    {
+    <tr>
+        <td>
+            @item.Role.RoleName
+        </td>
+        <td>
+            @item.Role.RoleDescription
+        </td>
+        <td>
+            @using (Html.BeginForm("Edit", "UserRoles", new { UID = item.User.UserID, RID = item.Role.RoleID, A = item.active }, FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+
+                if (item.active)
+                {
+                    <input type="submit" value="Remove" class="btn btn-outline-danger" />
+                }
+                else
+                {
+                    <input type="submit" value="Add" class="btn btn-outline-primary" />
+                }
+            }
+        </td>
+    </tr>
+    }
+    </table>
+
+
+<div>
+    @Html.ActionLink("Back to List", "Index", "Users")
+</div>

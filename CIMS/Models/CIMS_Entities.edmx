@@ -16,6 +16,14 @@
           <Property Name="UserID" Type="int" Nullable="false" />
           <Property Name="StatusID" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="AuditLog">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Action" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Branch">
           <Key>
             <PropertyRef Name="BranchID" />
@@ -87,6 +95,14 @@
           <Property Name="RoleDescription" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="Active" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="RoleStatus">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleID" Type="int" Nullable="false" />
+          <Property Name="StatusID" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Status">
           <Key>
             <PropertyRef Name="StatusID" />
@@ -95,7 +111,6 @@
           <Property Name="InstructionTypeID" Type="int" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Description" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="RoleID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -117,7 +132,7 @@
           <Property Name="Email" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="Approved" Type="int" />
           <Property Name="Active" Type="bit" Nullable="false" />
-          <Property Name="Username" Type="varchar" MaxLength="255" />
+          <Property Name="Username" Type="varchar" MaxLength="255" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'CIMS_NEW.dbo.UserInstruction' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -172,6 +187,18 @@ warning 6002: The table/view 'CIMS_NEW.dbo.UserInstruction' does not have a prim
               <PropertyRef Name="UserID" />
             </Principal>
             <Dependent Role="Action">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AuditLog_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="AuditLog" Type="Self.AuditLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="AuditLog">
               <PropertyRef Name="UserID" />
             </Dependent>
           </ReferentialConstraint>
@@ -236,6 +263,30 @@ warning 6002: The table/view 'CIMS_NEW.dbo.UserInstruction' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_RoleStatus_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="RoleStatus" Type="Self.RoleStatus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="RoleID" />
+            </Principal>
+            <Dependent Role="RoleStatus">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RoleStatus_Status">
+          <End Role="Status" Type="Self.Status" Multiplicity="1" />
+          <End Role="RoleStatus" Type="Self.RoleStatus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="StatusID" />
+            </Principal>
+            <Dependent Role="RoleStatus">
+              <PropertyRef Name="StatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Status_InstructionType1">
           <End Role="InstructionType" Type="Self.InstructionType" Multiplicity="1" />
           <End Role="Status" Type="Self.Status" Multiplicity="*" />
@@ -245,18 +296,6 @@ warning 6002: The table/view 'CIMS_NEW.dbo.UserInstruction' does not have a prim
             </Principal>
             <Dependent Role="Status">
               <PropertyRef Name="InstructionTypeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Status_Role">
-          <End Role="Role" Type="Self.Role" Multiplicity="1" />
-          <End Role="Status" Type="Self.Status" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Role">
-              <PropertyRef Name="RoleID" />
-            </Principal>
-            <Dependent Role="Status">
-              <PropertyRef Name="RoleID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -310,6 +349,7 @@ warning 6002: The table/view 'CIMS_NEW.dbo.UserInstruction' does not have a prim
         </Association>
         <EntityContainer Name="CIMS_NEWModelStoreContainer">
           <EntitySet Name="Action" EntityType="Self.Action" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AuditLog" EntityType="Self.AuditLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Branch" EntityType="Self.Branch" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Currency" EntityType="Self.Currency" Schema="dbo" store:Type="Tables" />
@@ -317,6 +357,7 @@ warning 6002: The table/view 'CIMS_NEW.dbo.UserInstruction' does not have a prim
           <EntitySet Name="InstructionCurrency" EntityType="Self.InstructionCurrency" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="InstructionType" EntityType="Self.InstructionType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RoleStatus" EntityType="Self.RoleStatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
@@ -340,6 +381,10 @@ warning 6002: The table/view 'CIMS_NEW.dbo.UserInstruction' does not have a prim
             <End Role="User" EntitySet="User" />
             <End Role="Action" EntitySet="Action" />
           </AssociationSet>
+          <AssociationSet Name="FK_AuditLog_User" Association="Self.FK_AuditLog_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="AuditLog" EntitySet="AuditLog" />
+          </AssociationSet>
           <AssociationSet Name="FK_Instruction_Branch" Association="Self.FK_Instruction_Branch">
             <End Role="Branch" EntitySet="Branch" />
             <End Role="Instruction" EntitySet="Instruction" />
@@ -360,12 +405,16 @@ warning 6002: The table/view 'CIMS_NEW.dbo.UserInstruction' does not have a prim
             <End Role="Instruction" EntitySet="Instruction" />
             <End Role="InstructionCurrency" EntitySet="InstructionCurrency" />
           </AssociationSet>
+          <AssociationSet Name="FK_RoleStatus_Role" Association="Self.FK_RoleStatus_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="RoleStatus" EntitySet="RoleStatus" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RoleStatus_Status" Association="Self.FK_RoleStatus_Status">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="RoleStatus" EntitySet="RoleStatus" />
+          </AssociationSet>
           <AssociationSet Name="FK_Status_InstructionType1" Association="Self.FK_Status_InstructionType1">
             <End Role="InstructionType" EntitySet="InstructionType" />
-            <End Role="Status" EntitySet="Status" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Status_Role" Association="Self.FK_Status_Role">
-            <End Role="Role" EntitySet="Role" />
             <End Role="Status" EntitySet="Status" />
           </AssociationSet>
           <AssociationSet Name="FK_UserInstruction_Instruction" Association="Self.FK_UserInstruction_Instruction">
@@ -488,6 +537,7 @@ warning 6002: The table/view 'CIMS_NEW.dbo.UserInstruction' does not have a prim
           <NavigationProperty Name="Status" Relationship="Self.FK_Status_Role" FromRole="Role" ToRole="Status" />
           <NavigationProperty Name="UserRoles" Relationship="Self.FK_UserRole_Role" FromRole="Role" ToRole="UserRole" />
           <Property Name="Active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="RoleStatus" Relationship="CIMS_NEWModel.FK_RoleStatus_Role" FromRole="Role" ToRole="RoleStatu" />
         </EntityType>
         <EntityType Name="Status">
           <Key>
@@ -501,6 +551,7 @@ warning 6002: The table/view 'CIMS_NEW.dbo.UserInstruction' does not have a prim
           <NavigationProperty Name="Actions" Relationship="Self.FK_Action_Status" FromRole="Status" ToRole="Action" />
           <NavigationProperty Name="InstructionType" Relationship="Self.FK_Status_InstructionType1" FromRole="Status" ToRole="InstructionType" />
           <NavigationProperty Name="Role" Relationship="Self.FK_Status_Role" FromRole="Status" ToRole="Role" />
+          <NavigationProperty Name="RoleStatus" Relationship="CIMS_NEWModel.FK_RoleStatus_Status" FromRole="Status" ToRole="RoleStatu" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -522,10 +573,11 @@ warning 6002: The table/view 'CIMS_NEW.dbo.UserInstruction' does not have a prim
           <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Approved" Type="Int32" />
           <Property Name="Active" Type="Boolean" Nullable="false" />
-          <Property Name="Username" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Username" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Actions" Relationship="Self.FK_Action_User" FromRole="User" ToRole="Action" />
           <NavigationProperty Name="UserInstructions" Relationship="Self.FK_UserInstruction_User" FromRole="User" ToRole="UserInstruction" />
           <NavigationProperty Name="UserRoles" Relationship="Self.FK_UserRole_User" FromRole="User" ToRole="UserRole" />
+          <NavigationProperty Name="AuditLogs" Relationship="CIMS_NEWModel.FK_AuditLog_User" FromRole="User" ToRole="AuditLog" />
         </EntityType>
         <EntityType Name="UserRole">
           <Key>
@@ -788,7 +840,76 @@ warning 6002: The table/view 'CIMS_NEW.dbo.UserInstruction' does not have a prim
             <End Role="User" EntitySet="Users" />
             <End Role="UserRole" EntitySet="UserRoles" />
           </AssociationSet>
+          <EntitySet Name="AuditLogs" EntityType="CIMS_NEWModel.AuditLog" />
+          <AssociationSet Name="FK_AuditLog_User" Association="CIMS_NEWModel.FK_AuditLog_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="AuditLog" EntitySet="AuditLogs" />
+          </AssociationSet>
+          <EntitySet Name="RoleStatus" EntityType="CIMS_NEWModel.RoleStatus" />
+          <AssociationSet Name="FK_RoleStatus_Role" Association="CIMS_NEWModel.FK_RoleStatus_Role">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="RoleStatu" EntitySet="RoleStatus" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RoleStatus_Status" Association="CIMS_NEWModel.FK_RoleStatus_Status">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="RoleStatu" EntitySet="RoleStatus" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="AuditLog">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Action" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="CIMS_NEWModel.FK_AuditLog_User" FromRole="AuditLog" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_AuditLog_User">
+          <End Type="CIMS_NEWModel.User" Role="User" Multiplicity="1" />
+          <End Type="CIMS_NEWModel.AuditLog" Role="AuditLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="AuditLog">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="RoleStatus">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleID" Type="Int32" Nullable="false" />
+          <Property Name="StatusID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Role" Relationship="CIMS_NEWModel.FK_RoleStatus_Role" FromRole="RoleStatu" ToRole="Role" />
+          <NavigationProperty Name="Status" Relationship="CIMS_NEWModel.FK_RoleStatus_Status" FromRole="RoleStatu" ToRole="Status" />
+        </EntityType>
+        <Association Name="FK_RoleStatus_Role">
+          <End Type="CIMS_NEWModel.Role" Role="Role" Multiplicity="1" />
+          <End Type="CIMS_NEWModel.RoleStatus" Role="RoleStatu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="RoleID" />
+            </Principal>
+            <Dependent Role="RoleStatu">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RoleStatus_Status">
+          <End Type="CIMS_NEWModel.Status" Role="Status" Multiplicity="1" />
+          <End Type="CIMS_NEWModel.RoleStatus" Role="RoleStatu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="StatusID" />
+            </Principal>
+            <Dependent Role="RoleStatu">
+              <PropertyRef Name="StatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -892,7 +1013,6 @@ warning 6002: The table/view 'CIMS_NEW.dbo.UserInstruction' does not have a prim
                 <ScalarProperty Name="InstructionTypeID" ColumnName="InstructionTypeID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -936,6 +1056,24 @@ warning 6002: The table/view 'CIMS_NEW.dbo.UserInstruction' does not have a prim
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="InstructionID" ColumnName="InstructionID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AuditLogs">
+            <EntityTypeMapping TypeName="CIMS_NEWModel.AuditLog">
+              <MappingFragment StoreEntitySet="AuditLog">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Action" ColumnName="Action" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RoleStatus">
+            <EntityTypeMapping TypeName="CIMS_NEWModel.RoleStatus">
+              <MappingFragment StoreEntitySet="RoleStatus">
+                <ScalarProperty Name="StatusID" ColumnName="StatusID" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

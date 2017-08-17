@@ -99,6 +99,7 @@
     <NavigationProperty Name="Status" Relationship="Self.FK_Status_Role" FromRole="Role" ToRole="Status" />
     <NavigationProperty Name="UserRoles" Relationship="Self.FK_UserRole_Role" FromRole="Role" ToRole="UserRole" />
     <Property Name="Active" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="RoleStatus" Relationship="CIMS_NEWModel.FK_RoleStatus_Role" FromRole="Role" ToRole="RoleStatu" />
   </EntityType>
   <EntityType Name="Status">
     <Key>
@@ -112,6 +113,7 @@
     <NavigationProperty Name="Actions" Relationship="Self.FK_Action_Status" FromRole="Status" ToRole="Action" />
     <NavigationProperty Name="InstructionType" Relationship="Self.FK_Status_InstructionType1" FromRole="Status" ToRole="InstructionType" />
     <NavigationProperty Name="Role" Relationship="Self.FK_Status_Role" FromRole="Status" ToRole="Role" />
+    <NavigationProperty Name="RoleStatus" Relationship="CIMS_NEWModel.FK_RoleStatus_Status" FromRole="Status" ToRole="RoleStatu" />
   </EntityType>
   <EntityType Name="sysdiagram">
     <Key>
@@ -133,10 +135,11 @@
     <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="Approved" Type="Int32" />
     <Property Name="Active" Type="Boolean" Nullable="false" />
-    <Property Name="Username" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="Username" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
     <NavigationProperty Name="Actions" Relationship="Self.FK_Action_User" FromRole="User" ToRole="Action" />
     <NavigationProperty Name="UserInstructions" Relationship="Self.FK_UserInstruction_User" FromRole="User" ToRole="UserInstruction" />
     <NavigationProperty Name="UserRoles" Relationship="Self.FK_UserRole_User" FromRole="User" ToRole="UserRole" />
+    <NavigationProperty Name="AuditLogs" Relationship="CIMS_NEWModel.FK_AuditLog_User" FromRole="User" ToRole="AuditLog" />
   </EntityType>
   <EntityType Name="UserRole">
     <Key>
@@ -399,5 +402,74 @@
       <End Role="User" EntitySet="Users" />
       <End Role="UserRole" EntitySet="UserRoles" />
     </AssociationSet>
+    <EntitySet Name="AuditLogs" EntityType="CIMS_NEWModel.AuditLog" />
+    <AssociationSet Name="FK_AuditLog_User" Association="CIMS_NEWModel.FK_AuditLog_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="AuditLog" EntitySet="AuditLogs" />
+    </AssociationSet>
+    <EntitySet Name="RoleStatus" EntityType="CIMS_NEWModel.RoleStatus" />
+    <AssociationSet Name="FK_RoleStatus_Role" Association="CIMS_NEWModel.FK_RoleStatus_Role">
+      <End Role="Role" EntitySet="Roles" />
+      <End Role="RoleStatu" EntitySet="RoleStatus" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RoleStatus_Status" Association="CIMS_NEWModel.FK_RoleStatus_Status">
+      <End Role="Status" EntitySet="Status" />
+      <End Role="RoleStatu" EntitySet="RoleStatus" />
+    </AssociationSet>
   </EntityContainer>
+  <EntityType Name="AuditLog">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Action" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="UserID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="User" Relationship="CIMS_NEWModel.FK_AuditLog_User" FromRole="AuditLog" ToRole="User" />
+  </EntityType>
+  <Association Name="FK_AuditLog_User">
+    <End Type="CIMS_NEWModel.User" Role="User" Multiplicity="1" />
+    <End Type="CIMS_NEWModel.AuditLog" Role="AuditLog" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="AuditLog">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="RoleStatus">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RoleID" Type="Int32" Nullable="false" />
+    <Property Name="StatusID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Role" Relationship="CIMS_NEWModel.FK_RoleStatus_Role" FromRole="RoleStatu" ToRole="Role" />
+    <NavigationProperty Name="Status" Relationship="CIMS_NEWModel.FK_RoleStatus_Status" FromRole="RoleStatu" ToRole="Status" />
+  </EntityType>
+  <Association Name="FK_RoleStatus_Role">
+    <End Type="CIMS_NEWModel.Role" Role="Role" Multiplicity="1" />
+    <End Type="CIMS_NEWModel.RoleStatus" Role="RoleStatu" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="RoleID" />
+      </Principal>
+      <Dependent Role="RoleStatu">
+        <PropertyRef Name="RoleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RoleStatus_Status">
+    <End Type="CIMS_NEWModel.Status" Role="Status" Multiplicity="1" />
+    <End Type="CIMS_NEWModel.RoleStatus" Role="RoleStatu" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Status">
+        <PropertyRef Name="StatusID" />
+      </Principal>
+      <Dependent Role="RoleStatu">
+        <PropertyRef Name="StatusID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

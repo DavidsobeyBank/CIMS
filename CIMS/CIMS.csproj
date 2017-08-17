@@ -191,10 +191,16 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InstructionTypesController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
+    <Compile Include="Controllers\StatusController.cs" />
+    <Compile Include="Controllers\UserRolesController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Action.cs">
+      <DependentUpon>CIMS_Entities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AuditLog.cs">
       <DependentUpon>CIMS_Entities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Branch.cs">
@@ -234,6 +240,9 @@
     <Compile Include="Models\Role.cs">
       <DependentUpon>CIMS_Entities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\RoleStatus.cs">
+      <DependentUpon>CIMS_Entities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Status.cs">
       <DependentUpon>CIMS_Entities.tt</DependentUpon>
     </Compile>
@@ -250,6 +259,7 @@
       <DependentUpon>CIMS_Entities.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\UserRoleViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="bower_components\bootstrap\dist\css\bootstrap-grid.css" />
@@ -716,6 +726,19 @@
     <Content Include="Views\InstructionTypes\Edit.cshtml" />
     <Content Include="Views\InstructionTypes\Index.cshtml" />
     <Content Include="Views\Roles\Activate.cshtml" />
+    <Content Include="Views\Users\Create.cshtml" />
+    <Content Include="Views\Users\Delete.cshtml" />
+    <Content Include="Views\Users\Details.cshtml" />
+    <Content Include="Views\Users\Edit.cshtml" />
+    <Content Include="Views\Users\Index.cshtml" />
+    <Content Include="Views\Users\Activate.cshtml" />
+    <Content Include="Views\Users\Approve.cshtml" />
+    <Content Include="Views\UserRoles\Edit.cshtml" />
+    <Content Include="Views\Status\Create.cshtml" />
+    <Content Include="Views\Status\Delete.cshtml" />
+    <Content Include="Views\Status\Details.cshtml" />
+    <Content Include="Views\Status\Edit.cshtml" />
+    <Content Include="Views\Status\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -20,6 +20,7 @@ namespace CIMS.Models
             this.Actions = new HashSet<Action>();
             this.UserInstructions = new HashSet<UserInstruction>();
             this.UserRoles = new HashSet<UserRole>();
+            this.AuditLogs = new HashSet<AuditLog>();
         }
     
         public int UserID { get; set; }
@@ -36,5 +37,7 @@ namespace CIMS.Models
         public virtual ICollection<UserInstruction> UserInstructions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserRole> UserRoles { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AuditLog> AuditLogs { get; set; }
     }
 }

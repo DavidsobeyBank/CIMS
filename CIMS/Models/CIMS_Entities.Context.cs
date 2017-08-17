@@ -38,5 +38,7 @@ namespace CIMS.Models
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserRole> UserRoles { get; set; }
         public virtual DbSet<UserInstruction> UserInstructions { get; set; }
+        public virtual DbSet<AuditLog> AuditLogs { get; set; }
+        public virtual DbSet<RoleStatus> RoleStatus { get; set; }
     }
 }

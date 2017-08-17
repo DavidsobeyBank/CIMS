@@ -18,6 +18,7 @@ namespace CIMS.Models
         public Status()
         {
             this.Actions = new HashSet<Action>();
+            this.RoleStatus = new HashSet<RoleStatus>();
         }
     
         public int StatusID { get; set; }
@@ -30,5 +31,7 @@ namespace CIMS.Models
         public virtual ICollection<Action> Actions { get; set; }
         public virtual InstructionType InstructionType { get; set; }
         public virtual Role Role { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RoleStatus> RoleStatus { get; set; }
     }
 }
