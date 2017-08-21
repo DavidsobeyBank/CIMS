@@ -1,0 +1,63 @@
+﻿@model IEnumerable<CIMS.Models.Status>
+
+@{
+    ViewBag.Title = "Mapping";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script>
+  $( function() {
+        $("#sortable").sortable({ axis: "y" });
+        $( "#sortable" ).disableSelection();
+    });
+   
+    $(function () {
+        $("#submit-list").button();
+
+        $("#submit-list").click(function () {
+            console.log("yup");
+            $.ajax({
+                url: '/InstructionTypes/Mapping/',
+                data: { items: $("#sortable").sortable('toArray') },
+                type: 'post',
+                traditional: true,
+                success: function (returndata) {
+                    if (returndata.ok)
+                        window.location = returndata.newurl;
+                    else
+                        window.alert(returndata.message);
+
+                }
+            });
+        });
+
+    });  
+</script>
+
+<h2>Mapping</h2>
+<div class="form-horizontal">
+    <hr />
+    <div class="row">
+        <div class="col-1 d-inline" style="padding-right:0px">
+            <ul class="list-group">
+                @{int count = 1; }
+                @{foreach (var item in Model)
+            {
+                        <li class="list-group-item">@count</li>
+                        { count++; }
+                    }
+                }
+            </ul>
+        </div>
+        <div class="col-11 d-inline" style="padding-left:0px">
+            <ul id="sortable" class="list-group">
+                @{ foreach (var item in Model)
+            {
+                        <li class="list-group-item" id=@Html.AttributeEncode(item.StatusID)><i class="fa fa-arrows-v" aria-hidden="true"></i>&nbsp;&nbsp;@item.Name - @item.Description</li>
+                    }
+                }
+            </ul>
+        </div>
+    </div>
+    <input type="submit" value="Save" id="submit-list" />  
+</div>

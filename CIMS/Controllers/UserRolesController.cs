@@ -79,6 +79,8 @@ namespace CIMS.Controllers
                 db.UserRoles.Add(userRole);
                 db.SaveChanges();
             }
+            CIMS.Models.CustomRoleProvider RP = new CustomRoleProvider();
+            RP.GetRolesForUser(User.Identity.Name.Split('\\').Last());
             return RedirectToAction("Edit/"+UID, "UserRoles");
         }
 

@@ -116,6 +116,31 @@ namespace CIMS.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult Mapping(int id)
+        {
+            List<Status>Statuses = StatusLooper(id);
+            
+
+            if (Statuses == null)
+            {
+                return HttpNotFound();
+            }
+            return View(Statuses);
+        }
+
+        [HttpPost]
+        public ActionResult Mapping(List<string> items)
+        {
+            for(int i = 0; i < items.Count-1; i++)
+            {
+                Status status = db.Status.Find(Convert.ToInt32(items[i]));
+                status.NextStatus = db.Status.Find(Convert.ToInt32(items[i + 1])).StatusID;
+                db.Entry(status).State = EntityState.Modified;
+            }
+            db.SaveChanges();
+            return Json(new { ok = true, newurl = Url.Action("Index") });
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -123,6 +148,37 @@ namespace CIMS.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        private List<Status> StatusLooper(int id)
+        {
+            List<Status> Statuses = db.Status.Where(S => S.InstructionTypeID == id && S.Active).ToList();
+            Status Archive = Statuses.Where(S => S.Name.Equals("Archive")).First();
+            List<Status> SList = new List<Status>
+            {
+                Archive
+            };
+            int prev = Archive.StatusID;
+            Statuses.Remove(Archive);
+            int count = 0;
+            foreach(Status S in Statuses)
+            {
+                if(S.NextStatus == 1)
+                {
+                    count++;
+                }
+                if (count > 1)
+                {
+                    Statuses.Add(Archive);
+                    return Statuses;
+                }
+                Status next = Statuses.Find(Ss => Ss.NextStatus == prev);
+                prev = next.StatusID;
+                SList.Add(next);
+            }
+            
+            SList.Reverse();
+            return SList;
         }
     }
 }
