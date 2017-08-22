@@ -25,9 +25,9 @@
     <EntitySetMapping Name="Branches">
       <EntityTypeMapping TypeName="CIMS_NEWModel.Branch">
         <MappingFragment StoreEntitySet="Branch">
-          <ScalarProperty Name="Active" ColumnName="Active" />
           <ScalarProperty Name="BranchID" ColumnName="BranchID" />
           <ScalarProperty Name="BranchName" ColumnName="BranchName" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -37,7 +37,7 @@
           <ScalarProperty Name="ClientID" ColumnName="ClientID" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="AccountNumber" ColumnName="AccountNumber" />
-          <ScalarProperty Name="Portfolo" ColumnName="Portfolo" />
+          <ScalarProperty Name="Portfolio" ColumnName="Portfolio" />
           <ScalarProperty Name="Sector" ColumnName="Sector" />
           <ScalarProperty Name="Active" ColumnName="Active" />
           <ScalarProperty Name="CustomerNumber" ColumnName="CustomerNumber" />

@@ -19,3 +19,21 @@ button {
     padding: 2px;
     height: 30px;
 }
+.page-item > a {
+    position: relative;
+    display: block;
+    padding: 0.5rem 0.75rem;
+    margin-left: -1px;
+    line-height: 1.25;
+    color: #007bff;
+    background-color: #fff;
+    border: 1px solid #ddd;
+}
+
+.page-item.active > a {
+    color: #fff;
+    background-color: rgb(2, 117, 216);
+    border: 1px solid black;
+    z-index: 2;
+    border-radius: 2px;
+}

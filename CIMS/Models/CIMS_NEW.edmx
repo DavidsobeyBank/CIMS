@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="CIMS_NEWModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="CIMS_NEWModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Action">
           <Key>
             <PropertyRef Name="ActionID" />
@@ -39,7 +39,7 @@
           <Property Name="ClientID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="AccountNumber" Type="varchar" MaxLength="255" Nullable="false" />
-          <Property Name="Portfolo" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Portfolio" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="Sector" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="Active" Type="bit" Nullable="false" />
           <Property Name="CustomerNumber" Type="varchar" MaxLength="255" Nullable="false" />
@@ -403,7 +403,8 @@
             <End Role="UserRole" EntitySet="UserRole" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="CIMS_NEWModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -436,8 +437,8 @@
           </Key>
           <Property Name="BranchID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="BranchName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Instructions" Relationship="Self.FK_Instruction_Branch" FromRole="Branch" ToRole="Instruction" />
           <Property Name="Active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Instructions" Relationship="Self.FK_Instruction_Branch" FromRole="Branch" ToRole="Instruction" />
         </EntityType>
         <EntityType Name="Client">
           <Key>
@@ -446,7 +447,7 @@
           <Property Name="ClientID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="AccountNumber" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Portfolo" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Portfolio" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Sector" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Active" Type="Boolean" Nullable="false" />
           <Property Name="CustomerNumber" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
@@ -867,9 +868,9 @@
           <EntitySetMapping Name="Branches">
             <EntityTypeMapping TypeName="CIMS_NEWModel.Branch">
               <MappingFragment StoreEntitySet="Branch">
-                <ScalarProperty Name="Active" ColumnName="Active" />
                 <ScalarProperty Name="BranchID" ColumnName="BranchID" />
                 <ScalarProperty Name="BranchName" ColumnName="BranchName" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -879,7 +880,7 @@
                 <ScalarProperty Name="ClientID" ColumnName="ClientID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="AccountNumber" ColumnName="AccountNumber" />
-                <ScalarProperty Name="Portfolo" ColumnName="Portfolo" />
+                <ScalarProperty Name="Portfolio" ColumnName="Portfolio" />
                 <ScalarProperty Name="Sector" ColumnName="Sector" />
                 <ScalarProperty Name="Active" ColumnName="Active" />
                 <ScalarProperty Name="CustomerNumber" ColumnName="CustomerNumber" />

@@ -29,8 +29,8 @@
     </Key>
     <Property Name="BranchID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="BranchName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-    <NavigationProperty Name="Instructions" Relationship="Self.FK_Instruction_Branch" FromRole="Branch" ToRole="Instruction" />
     <Property Name="Active" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Instructions" Relationship="Self.FK_Instruction_Branch" FromRole="Branch" ToRole="Instruction" />
   </EntityType>
   <EntityType Name="Client">
     <Key>
@@ -39,7 +39,7 @@
     <Property Name="ClientID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="AccountNumber" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="Portfolo" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Portfolio" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="Sector" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="Active" Type="Boolean" Nullable="false" />
     <Property Name="CustomerNumber" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />

@@ -83,6 +83,12 @@
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -192,6 +198,7 @@
     <Compile Include="Controllers\BranchesController.cs" />
     <Compile Include="Controllers\CurrenciesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InstructionsController.cs" />
     <Compile Include="Controllers\InstructionTypesController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\StatusController.cs" />
@@ -1246,6 +1253,7 @@
     <Content Include="bower_components\tether\src\js\utils.js" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\PagedList.css" />
     <Content Include="Content\wickedpicker.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontello.svg" />
@@ -1466,13 +1474,6 @@
     <Content Include="fonts\fontello.eot" />
     <Content Include="fonts\fontello.ttf" />
     <Content Include="fonts\fontello.woff" />
-    <EntityDeploy Include="Models\CIMS_NEW.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>CIMS_NEW.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\CIMS_NEW.edmx.diagram">
-      <DependentUpon>CIMS_NEW.edmx</DependentUpon>
-    </Content>
     <Content Include="bower_components\jquery-ui\.bower.json" />
     <Content Include="bower_components\jquery-ui\bower.json" />
     <Content Include="bower_components\jquery-ui\component.json" />
@@ -1534,6 +1535,13 @@
     <Content Include="bower_components\popper.js\packages\tooltip\yarn.lock" />
     <Content Include="bower_components\popper.js\README.md" />
     <Content Include="bower_components\popper.js\yarn.lock" />
+    <EntityDeploy Include="Models\CIMS_NEW.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>CIMS_NEW.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\CIMS_NEW.edmx.diagram">
+      <DependentUpon>CIMS_NEW.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -1598,6 +1606,12 @@
     <Content Include="Views\Branches\Index.cshtml" />
     <Content Include="Views\Branches\Activate.cshtml" />
     <Content Include="Views\InstructionTypes\Mapping.cshtml" />
+    <Content Include="Views\Instructions\Create.cshtml" />
+    <Content Include="Views\Instructions\Delete.cshtml" />
+    <Content Include="Views\Instructions\Details.cshtml" />
+    <Content Include="Views\Instructions\Edit.cshtml" />
+    <Content Include="Views\Instructions\Index.cshtml" />
+    <Content Include="Views\Instructions\Search.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -23,7 +23,7 @@ namespace CIMS.Models
         public int ClientID { get; set; }
         public string Name { get; set; }
         public string AccountNumber { get; set; }
-        public string Portfolo { get; set; }
+        public string Portfolio { get; set; }
         public string Sector { get; set; }
         public bool Active { get; set; }
         public string CustomerNumber { get; set; }

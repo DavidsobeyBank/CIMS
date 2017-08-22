@@ -4,19 +4,19 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="f27cc9407e1d4144a6827ff68c77162c" Name="Diagram1" ZoomLevel="167">
-        <EntityTypeShape EntityType="CIMS_NEWModel.Action" Width="1.5" PointX="3" PointY="8.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="CIMS_NEWModel.AuditLog" Width="1.5" PointX="3" PointY="12.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="CIMS_NEWModel.Branch" Width="1.5" PointX="3.75" PointY="2.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="CIMS_NEWModel.Client" Width="1.5" PointX="3.75" PointY="16.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="CIMS_NEWModel.Currency" Width="1.5" PointX="3.75" PointY="19.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="CIMS_NEWModel.Instruction" Width="1.5" PointX="6" PointY="7.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="CIMS_NEWModel.InstructionType" Width="1.5" PointX="3.75" PointY="22.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="CIMS_NEWModel.Role" Width="1.5" PointX="0.75" PointY="5.125" IsExpanded="true" />
+      <Diagram DiagramId="feb6daf26bfd40d2b6182e003762bdb8" Name="Diagram1">
+        <EntityTypeShape EntityType="CIMS_NEWModel.Action" Width="1.5" PointX="3" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="CIMS_NEWModel.AuditLog" Width="1.5" PointX="3" PointY="13" IsExpanded="true" />
+        <EntityTypeShape EntityType="CIMS_NEWModel.Branch" Width="1.5" PointX="3.75" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CIMS_NEWModel.Client" Width="1.5" PointX="3.75" PointY="16.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CIMS_NEWModel.Currency" Width="1.5" PointX="3.75" PointY="19.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CIMS_NEWModel.Instruction" Width="1.5" PointX="6" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CIMS_NEWModel.InstructionType" Width="1.5" PointX="3.75" PointY="22.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CIMS_NEWModel.Role" Width="1.5" PointX="0.75" PointY="5.25" IsExpanded="true" />
         <EntityTypeShape EntityType="CIMS_NEWModel.Status" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="CIMS_NEWModel.sysdiagram" Width="1.5" PointX="5.75" PointY="2.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="CIMS_NEWModel.User" Width="1.5" PointX="0.75" PointY="8.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="CIMS_NEWModel.UserRole" Width="1.5" PointX="3" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CIMS_NEWModel.sysdiagram" Width="1.5" PointX="5.75" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CIMS_NEWModel.User" Width="1.5" PointX="0.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CIMS_NEWModel.UserRole" Width="1.5" PointX="3" PointY="5.25" IsExpanded="true" />
         <AssociationConnector Association="CIMS_NEWModel.FK_Action_Instruction" ManuallyRouted="false" />
         <AssociationConnector Association="CIMS_NEWModel.FK_Action_Status" ManuallyRouted="false" />
         <AssociationConnector Association="CIMS_NEWModel.FK_Action_User" ManuallyRouted="false" />

@@ -1,0 +1,71 @@
+﻿@model PagedList.IPagedList<CIMS.Models.Client>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Search";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Search</h2>
+@using (Html.BeginForm("Search", "Instructions", FormMethod.Get))
+{
+    <p>
+        Find by name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Search" />
+    </p>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.ActionLink("ClientID", "Search", new { sortOrder = ViewBag.IDSortParam, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            @Html.ActionLink("Name", "Search", new { sortOrder = ViewBag.NameSortParam, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            Customer Number
+        </th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ClientID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CustomerNumber)
+            </td>
+            <td>
+                @Html.ActionLink("Select", "Create", new { id = item.ClientID }) |
+            </td>
+        </tr>
+    }
+</table>
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model,
+    page => Url.Action("Search",
+    new
+    {
+        page,
+        sortOrder = ViewBag.CurrentSort,
+        currentFilter = ViewBag.CurrentFilter,
+    }
+    ),
+    new PagedListRenderOptions()
+    {
+        LiElementClasses = new List<string> { "page-item" },
+        DisplayEllipsesWhenNotShowingAllPageNumbers = true,
+        MaximumPageNumbersToDisplay = 3,
+        DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+        DisplayLinkToLastPage = PagedListDisplayMode.Always,
+        LinkToFirstPageFormat = String.Format("First"),
+        LinkToLastPageFormat= String.Format("Last"),
+        
+    }
+    )

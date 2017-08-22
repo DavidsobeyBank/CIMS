@@ -93,3 +93,7 @@ C:\Dev\CIMS\CIMS\bin\Microsoft.AI.Web.xml
 C:\Dev\CIMS\CIMS\obj\Debug\CIMS.dll
 C:\Dev\CIMS\CIMS\obj\Debug\CIMS.pdb
 C:\Dev\CIMS\CIMS\obj\Debug\CIMS.csprojResolveAssemblyReference.cache
+C:\Dev\CIMS\CIMS\bin\PagedList.dll
+C:\Dev\CIMS\CIMS\bin\PagedList.Mvc.dll
+C:\Dev\CIMS\CIMS\bin\PagedList.xml
+C:\Dev\CIMS\CIMS\bin\PagedList.Mvc.xml
