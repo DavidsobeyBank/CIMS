@@ -1,6 +1,9 @@
-﻿
+﻿body {
+    /*background: grey;*/
+    /*background-image: url('../Images/dark_mosaic.png');*/
+}
 a {
-    outline: none!important;
+    outline: none !important;
 }
 button {
     outline: none!important;
@@ -36,4 +39,12 @@ button {
     border: 1px solid black;
     z-index: 2;
     border-radius: 2px;
+}
+.card-header {
+    background-color: #007bff !important;
+    color: white;
+}
+
+.margining{
+    border-bottom: 1px solid black;
 }

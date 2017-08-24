@@ -1,13 +1,11 @@
 ﻿@model IEnumerable<CIMS.Models.InstructionType>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Instruction Type Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="d-inline">
-    <h2 class="d-inline">Index</h2>
-
     <p class="pull-right d-inline">
         @Html.ActionLink("Create", "Create", null, new { @class = "btn btn-outline-success" })
         @Html.ActionLink("Reactivate", "Activate", null, new { @class = "btn btn-outline-primary" })

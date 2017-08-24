@@ -69,7 +69,7 @@
           <Property Name="CurrencyFrom" Type="int" Nullable="false" />
           <Property Name="CurrencyTo" Type="int" Nullable="false" />
           <Property Name="BranchID" Type="int" Nullable="false" />
-          <Property Name="EERef" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="EERef" Type="varchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="InstructionType">
           <Key>
@@ -480,7 +480,7 @@
           <Property Name="CurrencyFrom" Type="Int32" Nullable="false" />
           <Property Name="CurrencyTo" Type="Int32" Nullable="false" />
           <Property Name="BranchID" Type="Int32" Nullable="false" />
-          <Property Name="EERef" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="EERef" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Actions" Relationship="Self.FK_Action_Instruction" FromRole="Instruction" ToRole="Action" />
           <NavigationProperty Name="Branch" Relationship="Self.FK_Instruction_Branch" FromRole="Instruction" ToRole="Branch" />
           <NavigationProperty Name="Client" Relationship="Self.FK_Instruction_Client" FromRole="Instruction" ToRole="Client" />

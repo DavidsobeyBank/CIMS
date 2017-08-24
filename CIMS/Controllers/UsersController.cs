@@ -10,6 +10,7 @@ using CIMS.Models;
 
 namespace CIMS.Controllers
 {
+    [Authorize(Roles = "Administrator")]
     public class UsersController : Controller
     {
         private CIMS_NEWEntities db = new CIMS_NEWEntities();
@@ -182,7 +183,7 @@ namespace CIMS.Controllers
             user.Approved = 1;
 
             db.SaveChanges();
-            return RedirectToAction("Index", "UserRoles");
+            return RedirectToAction("Edit/"+id, "UserRoles");
 
         }
 

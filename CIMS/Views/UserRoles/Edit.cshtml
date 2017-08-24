@@ -1,11 +1,11 @@
 ﻿@model IEnumerable<CIMS.ViewModel.UserRoleViewModel>
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Manage User Roles";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Manage User Roles - @Model.First().User.Name @Model.First().User.Surname</h2>
+<h3>@Model.First().User.Name @Model.First().User.Surname</h3>
 <table class="table">
     <tr>
         <th>

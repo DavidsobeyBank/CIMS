@@ -1,14 +1,12 @@
 ﻿@model CIMS.Models.InstructionType
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Instruction Type Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <br/>
     <div class="d-inline">
-        <h2 class="d-inline">User Details</h2>
-
         <p class="pull-right d-inline">
             @Html.ActionLink("Map Process", "Mapping", "InstructionTypes", new { id = Model.InstructionTypeID}, new { @class = "btn btn-outline-primary" })
         </p>
@@ -16,7 +14,7 @@
 
     <div>
         <h4></h4>
-        <hr />
+        
         <dl class="dl-horizontal">
             <dt>
                 @Html.DisplayNameFor(model => model.Name)

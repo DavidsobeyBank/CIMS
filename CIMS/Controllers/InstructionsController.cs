@@ -39,10 +39,12 @@ namespace CIMS.Controllers
         }
 
         // GET: Instructions/Create
-        public ActionResult Create()
+        public ActionResult Create(int ID)
         {
+            Client client = db.Clients.Find(ID);
+            ViewBag.Client = client.Name;
+            ViewBag.ClientID = Convert.ToString(client.ClientID);
             ViewBag.BranchID = new SelectList(db.Branches, "BranchID", "BranchName");
-            ViewBag.ClientID = new SelectList(db.Clients, "ClientID", "Name");
             ViewBag.CurrencyFrom = new SelectList(db.Currencies, "CurrencyID", "CurrencyName");
             ViewBag.CurrencyTo = new SelectList(db.Currencies, "CurrencyID", "CurrencyName");
             ViewBag.InstructionTypeID = new SelectList(db.InstructionTypes, "InstructionTypeID", "Name");
@@ -56,23 +58,31 @@ namespace CIMS.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "InstructionID,InstructionTypeID,CreateDate,CreateUser,StatusID,FromUser,ToUser,Amount,ClientID,CurrencyFrom,CurrencyTo,BranchID,EERef")] Instruction instruction)
+        public ActionResult Create([Bind(Include = "InstructionTypeID,Amount,ClientID,CurrencyTo,BranchID,EERef")] Instruction instruction, string clientID, string comment)
         {
-            if (ModelState.IsValid)
-            {
-                db.Instructions.Add(instruction);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+            string UN = User.Identity.Name.Split('\\').Last();
 
-            ViewBag.BranchID = new SelectList(db.Branches, "BranchID", "BranchName", instruction.BranchID);
-            ViewBag.ClientID = new SelectList(db.Clients, "ClientID", "Name", instruction.ClientID);
-            ViewBag.CurrencyFrom = new SelectList(db.Currencies, "CurrencyID", "CurrencyName", instruction.CurrencyFrom);
-            ViewBag.CurrencyTo = new SelectList(db.Currencies, "CurrencyID", "CurrencyName", instruction.CurrencyTo);
-            ViewBag.InstructionTypeID = new SelectList(db.InstructionTypes, "InstructionTypeID", "Name", instruction.InstructionTypeID);
-            ViewBag.FromUser = new SelectList(db.Users, "UserID", "Name", instruction.FromUser);
-            ViewBag.ToUser = new SelectList(db.Users, "UserID", "Name", instruction.ToUser);
-            return View(instruction);
+            instruction.ClientID = Convert.ToInt32(clientID);
+            instruction.CreateUser = db.Users.Where(U => U.Username == UN).First().UserID;
+            instruction.FromUser = db.Users.Where(U => U.Username == UN).First().UserID;
+            instruction.CurrencyFrom = db.Currencies.First().CurrencyID;
+            instruction.CreateDate = DateTime.Now;
+            instruction.StatusID = findStatus(instruction.InstructionTypeID);
+            instruction.ToUser = 1;
+
+            db.Instructions.Add(instruction);
+            db.SaveChanges();
+
+            Models.Action action = new Models.Action();
+            action.ActionDate = DateTime.Now;
+            action.Comment = comment;
+            action.InstructionID = db.Instructions.ToList().Last().InstructionID;
+            action.StatusID = findStatus(instruction.InstructionTypeID);
+            action.UserID = db.Users.Where(U => U.Username == UN).First().UserID;
+            db.Actions.Add(action);
+            db.SaveChanges();
+
+            return RedirectToAction("Index");
         }
 
         // GET: Instructions/Edit/5
@@ -206,6 +216,33 @@ namespace CIMS.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public int findStatus(int InstructionTypeID)
+        {
+            List<Status> Statuses = db.Status.Where(S => S.InstructionTypeID == InstructionTypeID).ToList();
+            List<int> nextS = new List<int>();
+
+            foreach (Status s in Statuses)
+            {
+                nextS.Add(s.NextStatus);
+            }
+            foreach(Status s in Statuses)
+            {
+                bool check = false;
+                foreach(int i in nextS)
+                {
+                    if(s.StatusID == i)
+                    {
+                        check = true;
+                    }
+                }
+                if(!check)
+                {
+                    return s.StatusID;
+                }
+            }
+            return 1;
         }
     }
 }

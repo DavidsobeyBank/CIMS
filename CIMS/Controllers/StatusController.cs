@@ -10,6 +10,7 @@ using CIMS.Models;
 
 namespace CIMS.Controllers
 {
+    [Authorize(Roles = "Administrator")]
     public class StatusController : Controller
     {
         private CIMS_NEWEntities db = new CIMS_NEWEntities();
@@ -84,9 +85,9 @@ namespace CIMS.Controllers
                     Statuses.Add(S);
                 }
             }
-            ViewBag.InstructionTypeID = new SelectList(db.InstructionTypes, "InstructionTypeID", "Name", status.InstructionTypeID);
-            ViewBag.NextStatus = new SelectList(Statuses, "StatusID", "Name", status.NextStatus);
-            ViewBag.RoleID = new SelectList(db.Roles, "RoleID", "RoleName", status.RoleID);
+            ViewBag.InstructionTypeID = new SelectList(db.InstructionTypes.Where(I => I.Active), "InstructionTypeID", "Name", status.InstructionTypeID);
+            ViewBag.NextStatus = new SelectList(Statuses.Where(I => I.Active), "StatusID", "Name", status.NextStatus);
+            ViewBag.RoleID = new SelectList(db.Roles.Where(I => I.Active), "RoleID", "RoleName", status.RoleID);
             return View(status);
         }
 
@@ -95,7 +96,7 @@ namespace CIMS.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "StatusID,InstructionTypeID,Name,Description,Active,NextStatus")] Status status)
+        public ActionResult Edit([Bind(Include = "StatusID,InstructionTypeID,RoleID,Name,Description,Active,NextStatus")] Status status)
         {
             if (ModelState.IsValid)
             {

@@ -64,7 +64,7 @@
     <Property Name="CurrencyFrom" Type="int" Nullable="false" />
     <Property Name="CurrencyTo" Type="int" Nullable="false" />
     <Property Name="BranchID" Type="int" Nullable="false" />
-    <Property Name="EERef" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="EERef" Type="varchar" MaxLength="255" />
   </EntityType>
   <EntityType Name="InstructionType">
     <Key>

@@ -260,6 +260,7 @@
       <DependentUpon>CIMS_NEW.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\InstructionAction.cs" />
     <Compile Include="ViewModel\UserRoleViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -1260,6 +1261,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\dark_mosaic.png" />
+    <Content Include="Images\footer_lodyas.png" />
     <Content Include="Images\Logo.png" />
     <Content Include="Models\CIMS_NEW.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

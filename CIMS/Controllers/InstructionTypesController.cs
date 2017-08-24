@@ -10,6 +10,7 @@ using CIMS.Models;
 
 namespace CIMS.Controllers
 {
+    [Authorize(Roles = "Administrator")]
     public class InstructionTypesController : Controller
     {
         private CIMS_NEWEntities db = new CIMS_NEWEntities();
