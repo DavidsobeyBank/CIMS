@@ -39,31 +39,37 @@ namespace CIMS.Controllers
         }
 
         // GET: Instructions/Create
-        public ActionResult Create(int ID)
+        public ActionResult Create(int ID, int? insID)
         {
+            //if (!insID.HasValue)
+            //    insID = 1;
+            string UN = User.Identity.Name.Split('\\').Last();
+
             Client client = db.Clients.Find(ID);
             ViewBag.Client = client.Name;
             ViewBag.ClientID = Convert.ToString(client.ClientID);
-            ViewBag.BranchID = new SelectList(db.Branches, "BranchID", "BranchName");
-            ViewBag.CurrencyFrom = new SelectList(db.Currencies, "CurrencyID", "CurrencyName");
-            ViewBag.CurrencyTo = new SelectList(db.Currencies, "CurrencyID", "CurrencyName");
-            ViewBag.InstructionTypeID = new SelectList(db.InstructionTypes, "InstructionTypeID", "Name");
-            ViewBag.FromUser = new SelectList(db.Users, "UserID", "Name");
-            ViewBag.ToUser = new SelectList(db.Users, "UserID", "Name");
+            ViewBag.BranchID = new SelectList(db.Branches.Where(I => I.Active), "BranchID", "BranchName");
+            ViewBag.Branch = client.BranchID;
+            if (insID != null)
+            ViewBag.StatusID = new SelectList(StatusLooper(ID), "StatusID", "Name");
+            ViewBag.CurrencyTo = new SelectList(db.Currencies.Where(I => I.Active), "CurrencyID", "CurrencyName");
+            ViewBag.InstructionTypeID = new SelectList(db.InstructionTypes.Where(I => I.Active), "InstructionTypeID", "Name");
+            ViewBag.InstructionType = db.InstructionTypes.Where(I => I.Active).First();
             return View();
+            
         }
-
+        
         // POST: Instructions/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "InstructionTypeID,Amount,ClientID,CurrencyTo,BranchID,EERef")] Instruction instruction, string clientID, string comment)
+        public ActionResult Create([Bind(Include = "InstructionTypeID,Amount,ClientID,StatusID,CurrencyTo,BranchID,EERef")] Instruction instruction, string clientID, string comment)
         {
             string UN = User.Identity.Name.Split('\\').Last();
 
             instruction.ClientID = Convert.ToInt32(clientID);
-            instruction.CreateUser = db.Users.Where(U => U.Username == UN).First().UserID;
+            instruction.CreateUser = db.Users.Where(U => U.Username.Equals(UN, StringComparison.InvariantCultureIgnoreCase)).First().UserID;
             instruction.FromUser = db.Users.Where(U => U.Username == UN).First().UserID;
             instruction.CurrencyFrom = db.Currencies.First().CurrencyID;
             instruction.CreateDate = DateTime.Now;
@@ -97,14 +103,17 @@ namespace CIMS.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.BranchID = new SelectList(db.Branches, "BranchID", "BranchName", instruction.BranchID);
-            ViewBag.ClientID = new SelectList(db.Clients, "ClientID", "Name", instruction.ClientID);
-            ViewBag.CurrencyFrom = new SelectList(db.Currencies, "CurrencyID", "CurrencyName", instruction.CurrencyFrom);
-            ViewBag.CurrencyTo = new SelectList(db.Currencies, "CurrencyID", "CurrencyName", instruction.CurrencyTo);
-            ViewBag.InstructionTypeID = new SelectList(db.InstructionTypes, "InstructionTypeID", "Name", instruction.InstructionTypeID);
-            ViewBag.FromUser = new SelectList(db.Users, "UserID", "Name", instruction.FromUser);
-            ViewBag.ToUser = new SelectList(db.Users, "UserID", "Name", instruction.ToUser);
-            return View(instruction);
+            ViewBag.Branch = instruction.Branch.BranchName;
+            ViewBag.Client = instruction.Client.AccountNumber + " - " + instruction.Client.Name;
+            ViewBag.CurrencyFrom = instruction.Currency.CurrencyName;
+            ViewBag.CurrencyTo = instruction.Currency1.CurrencyName;
+            ViewBag.InstructionType = instruction.InstructionType.Name;
+            ViewBag.FromUser = instruction.User.Name + " " + instruction.User.Surname;
+            ViewBag.Commentary = instruction.User.Name + " " + instruction.User.Surname;
+            ViewBag.EERef = instruction.EERef;
+            List<Models.Action> Actions = db.Actions.Where(A => A.InstructionID == id).ToList();
+
+            return View(Actions);
         }
 
         // POST: Instructions/Edit/5
@@ -112,22 +121,10 @@ namespace CIMS.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "InstructionID,InstructionTypeID,CreateDate,CreateUser,StatusID,FromUser,ToUser,Amount,ClientID,CurrencyFrom,CurrencyTo,BranchID,EERef")] Instruction instruction)
+        public ActionResult Edit(string comment, string EERef)
         {
-            if (ModelState.IsValid)
-            {
-                db.Entry(instruction).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewBag.BranchID = new SelectList(db.Branches, "BranchID", "BranchName", instruction.BranchID);
-            ViewBag.ClientID = new SelectList(db.Clients, "ClientID", "Name", instruction.ClientID);
-            ViewBag.CurrencyFrom = new SelectList(db.Currencies, "CurrencyID", "CurrencyName", instruction.CurrencyFrom);
-            ViewBag.CurrencyTo = new SelectList(db.Currencies, "CurrencyID", "CurrencyName", instruction.CurrencyTo);
-            ViewBag.InstructionTypeID = new SelectList(db.InstructionTypes, "InstructionTypeID", "Name", instruction.InstructionTypeID);
-            ViewBag.FromUser = new SelectList(db.Users, "UserID", "Name", instruction.FromUser);
-            ViewBag.ToUser = new SelectList(db.Users, "UserID", "Name", instruction.ToUser);
-            return View(instruction);
+
+            return View();
         }
 
         // GET: Instructions/Delete/5
@@ -244,5 +241,22 @@ namespace CIMS.Controllers
             }
             return 1;
         }
+
+        public List<Status> StatusLooper (int ID)
+        {
+            InstructionTypesController Ins = new InstructionTypesController();
+            List<Status> S = Ins.StatusLooper(ID);
+            Status status = db.Status.Find(ID);
+            foreach(Status s in S)
+            {
+                if(s.StatusID == status.StatusID)
+                {
+                    S.Remove(status);
+                    S.Insert(0, status);
+                }
+            }
+            return S;
+        }
+       
     }
 }

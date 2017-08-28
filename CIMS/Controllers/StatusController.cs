@@ -18,7 +18,7 @@ namespace CIMS.Controllers
         // GET: Status
         public ActionResult Index()
         {
-            return View(db.Status.Where(S => S.Active).ToList());
+            return View(db.Status.Where(S => S.Active && S.StatusID != 1).ToList());
         }
 
         // GET: Status/Details/5
@@ -39,7 +39,7 @@ namespace CIMS.Controllers
         // GET: Status/Create
         public ActionResult Create()
         {
-            ViewBag.InstructionTypeID = new SelectList(db.InstructionTypes, "InstructionTypeID", "Name");
+            ViewBag.InstructionTypeID = new SelectList(db.InstructionTypes.Where(I => I.Active && I.InstructionTypeID != 1), "InstructionTypeID", "Name");
             ViewBag.RoleID = new SelectList(db.Roles, "RoleID", "RoleName");
             return View();
         }
@@ -85,7 +85,7 @@ namespace CIMS.Controllers
                     Statuses.Add(S);
                 }
             }
-            ViewBag.InstructionTypeID = new SelectList(db.InstructionTypes.Where(I => I.Active), "InstructionTypeID", "Name", status.InstructionTypeID);
+            ViewBag.InstructionTypeID = new SelectList(db.InstructionTypes.Where(I => I.Active && I.InstructionTypeID != 1), "InstructionTypeID", "Name", status.InstructionTypeID);
             ViewBag.NextStatus = new SelectList(Statuses.Where(I => I.Active), "StatusID", "Name", status.NextStatus);
             ViewBag.RoleID = new SelectList(db.Roles.Where(I => I.Active), "RoleID", "RoleName", status.RoleID);
             return View(status);
@@ -148,7 +148,7 @@ namespace CIMS.Controllers
         public ActionResult Activate()
         {
             List<Status> Status = (from status in db.Status
-                                where status.Active == false
+                                where status.Active == false && status.InstructionTypeID != 1
                                 select status).ToList();
 
             return View(Status);

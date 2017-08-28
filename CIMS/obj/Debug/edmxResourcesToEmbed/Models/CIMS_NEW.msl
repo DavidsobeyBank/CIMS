@@ -41,6 +41,7 @@
           <ScalarProperty Name="Sector" ColumnName="Sector" />
           <ScalarProperty Name="Active" ColumnName="Active" />
           <ScalarProperty Name="CustomerNumber" ColumnName="CustomerNumber" />
+          <ScalarProperty Name="BranchID" ColumnName="BranchID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -91,6 +92,7 @@
           <ScalarProperty Name="RoleName" ColumnName="RoleName" />
           <ScalarProperty Name="RoleDescription" ColumnName="RoleDescription" />
           <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="BranchID" ColumnName="BranchID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

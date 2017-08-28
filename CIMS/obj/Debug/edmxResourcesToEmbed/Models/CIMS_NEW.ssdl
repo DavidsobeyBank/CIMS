@@ -38,6 +38,7 @@
     <Property Name="Sector" Type="varchar" MaxLength="255" Nullable="false" />
     <Property Name="Active" Type="bit" Nullable="false" />
     <Property Name="CustomerNumber" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="BranchID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Currency">
     <Key>
@@ -84,6 +85,7 @@
     <Property Name="RoleName" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="RoleDescription" Type="varchar" MaxLength="255" Nullable="false" />
     <Property Name="Active" Type="bit" Nullable="false" />
+    <Property Name="BranchID" Type="int" />
   </EntityType>
   <EntityType Name="Status">
     <Key>
@@ -173,6 +175,18 @@
       </Principal>
       <Dependent Role="AuditLog">
         <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Client_Branch">
+    <End Role="Branch" Type="Self.Branch" Multiplicity="1" />
+    <End Role="Client" Type="Self.Client" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Branch">
+        <PropertyRef Name="BranchID" />
+      </Principal>
+      <Dependent Role="Client">
+        <PropertyRef Name="BranchID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -348,6 +362,10 @@
     <AssociationSet Name="FK_AuditLog_User" Association="Self.FK_AuditLog_User">
       <End Role="User" EntitySet="User" />
       <End Role="AuditLog" EntitySet="AuditLog" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Client_Branch" Association="Self.FK_Client_Branch">
+      <End Role="Branch" EntitySet="Branch" />
+      <End Role="Client" EntitySet="Client" />
     </AssociationSet>
     <AssociationSet Name="FK_Instruction_Branch" Association="Self.FK_Instruction_Branch">
       <End Role="Branch" EntitySet="Branch" />

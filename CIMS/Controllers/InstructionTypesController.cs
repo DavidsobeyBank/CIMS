@@ -18,7 +18,7 @@ namespace CIMS.Controllers
         // GET: InstructionTypes
         public ActionResult Index()
         {
-            return View(db.InstructionTypes.Where(I => I.Active).ToList());
+            return View(db.InstructionTypes.Where(I => I.Active && I.InstructionTypeID != 1).ToList());
         }
 
         // GET: InstructionTypes/Details/5
@@ -120,7 +120,7 @@ namespace CIMS.Controllers
         public ActionResult Mapping(int id)
         {
             List<Status>Statuses = StatusLooper(id);
-            
+             
 
             if (Statuses == null)
             {
@@ -138,6 +138,8 @@ namespace CIMS.Controllers
                 status.NextStatus = db.Status.Find(Convert.ToInt32(items[i + 1])).StatusID;
                 db.Entry(status).State = EntityState.Modified;
             }
+            Status S = db.Status.Find(Convert.ToInt32(items.ElementAt(items.Count-1).ToString()));
+            S.NextStatus = 1;
             db.SaveChanges();
             return Json(new { ok = true, newurl = Url.Action("Index") });
         }
@@ -151,35 +153,49 @@ namespace CIMS.Controllers
             base.Dispose(disposing);
         }
 
-        private List<Status> StatusLooper(int id)
+        public List<Status> StatusLooper(int id)
         {
-            List<Status> Statuses = db.Status.Where(S => S.InstructionTypeID == id && S.Active).ToList();
-            Status Archive = Statuses.Where(S => S.Name.Equals("Archive")).First();
-            List<Status> SList = new List<Status>
+            try
             {
-                Archive
-            };
-            int prev = Archive.StatusID;
-            Statuses.Remove(Archive);
-            int count = 0;
-            foreach(Status S in Statuses)
-            {
-                if(S.NextStatus == 1)
-                {
-                    count++;
-                }
-                if (count > 1)
-                {
-                    Statuses.Add(Archive);
+                List<Status> Statuses = db.Status.Where(S => S.InstructionTypeID == id && S.Active).ToList();
+                
+                if (Statuses.Where(S => S.NextStatus == 1).Count() > 1)
                     return Statuses;
+                if (Statuses.Count == 1)
+                    return Statuses;
+
+                int NextStatus = 1;
+                bool flag = true;
+                List<Status> StatusOrder = new List<Status>();
+                foreach (Status S in Statuses)
+                {
+                    if(NextStatus == 1)
+                    {
+                        foreach (Status SS in Statuses)
+                        {
+                            if (SS.NextStatus == NextStatus)
+                            {
+                                StatusOrder.Add(SS);
+                                NextStatus = SS.StatusID;
+                                flag = false;
+                            }
+                        }
+                    }
+                    if(!flag && Statuses.Count != StatusOrder.Count)
+                    {
+                        Status status = db.Status.Where(SS => SS.NextStatus == NextStatus).First();
+                        StatusOrder.Add(status);
+                        NextStatus = status.StatusID;
+                    }
                 }
-                Status next = Statuses.Find(Ss => Ss.NextStatus == prev);
-                prev = next.StatusID;
-                SList.Add(next);
+                StatusOrder.Reverse();
+                return StatusOrder;
             }
-            
-            SList.Reverse();
-            return SList;
+            catch(Exception E)
+            {
+                List<Status> Statuses = db.Status.Where(S => S.InstructionTypeID == id && S.Active).ToList();
+                return Statuses;
+            }
         }
     }
 }

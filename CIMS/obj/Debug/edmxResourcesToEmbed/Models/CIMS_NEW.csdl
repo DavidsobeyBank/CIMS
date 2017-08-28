@@ -30,6 +30,7 @@
     <Property Name="BranchID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="BranchName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="Active" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Clients" Relationship="Self.FK_Client_Branch" FromRole="Branch" ToRole="Client" />
     <NavigationProperty Name="Instructions" Relationship="Self.FK_Instruction_Branch" FromRole="Branch" ToRole="Instruction" />
   </EntityType>
   <EntityType Name="Client">
@@ -43,6 +44,8 @@
     <Property Name="Sector" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="Active" Type="Boolean" Nullable="false" />
     <Property Name="CustomerNumber" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="BranchID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Branch" Relationship="Self.FK_Client_Branch" FromRole="Client" ToRole="Branch" />
     <NavigationProperty Name="Instructions" Relationship="Self.FK_Instruction_Client" FromRole="Client" ToRole="Instruction" />
   </EntityType>
   <EntityType Name="Currency">
@@ -102,6 +105,7 @@
     <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="RoleDescription" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="Active" Type="Boolean" Nullable="false" />
+    <Property Name="BranchID" Type="Int32" />
     <NavigationProperty Name="Status" Relationship="Self.FK_Status_Role" FromRole="Role" ToRole="Status" />
     <NavigationProperty Name="UserRoles" Relationship="Self.FK_UserRole_Role" FromRole="Role" ToRole="UserRole" />
   </EntityType>
@@ -205,6 +209,18 @@
       </Principal>
       <Dependent Role="AuditLog">
         <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Client_Branch">
+    <End Role="Branch" Type="Self.Branch" Multiplicity="1" />
+    <End Role="Client" Type="Self.Client" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Branch">
+        <PropertyRef Name="BranchID" />
+      </Principal>
+      <Dependent Role="Client">
+        <PropertyRef Name="BranchID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -380,6 +396,10 @@
     <AssociationSet Name="FK_AuditLog_User" Association="Self.FK_AuditLog_User">
       <End Role="User" EntitySet="Users" />
       <End Role="AuditLog" EntitySet="AuditLogs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Client_Branch" Association="Self.FK_Client_Branch">
+      <End Role="Branch" EntitySet="Branches" />
+      <End Role="Client" EntitySet="Clients" />
     </AssociationSet>
     <AssociationSet Name="FK_Instruction_Branch" Association="Self.FK_Instruction_Branch">
       <End Role="Branch" EntitySet="Branches" />

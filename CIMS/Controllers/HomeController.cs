@@ -12,27 +12,19 @@ namespace CIMS.Controllers
             string a = test.GetANumber(User.Identity.Name);
             return View();
         }
-        [Authorize]
-        public ActionResult About()
+        
+        public ActionResult Switch()
         {
-            ViewBag.Message = "Your application description page.";
-
             return View();
         }
-        [Authorize(Roles = "Administrator")]
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
 
-            return RedirectToAction("Index");
+        [HttpPost]
+        public ActionResult Switch(string username)
+        {
+            CustomRoleProvider CRP = new CustomRoleProvider();
+            CRP.GetRolesForUser(username);
+            return RedirectToAction("index");
         }
 
-        //public void Authenticated()
-        //{ 
-        //    CustomRoleProvider A = new CustomRoleProvider();
-        //    string[] roles = A.GetRolesForUser(ID);
-        //}
-
-        
     }
 }

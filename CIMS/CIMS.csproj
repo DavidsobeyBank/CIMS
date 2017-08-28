@@ -1615,6 +1615,7 @@
     <Content Include="Views\Instructions\Edit.cshtml" />
     <Content Include="Views\Instructions\Index.cshtml" />
     <Content Include="Views\Instructions\Search.cshtml" />
+    <Content Include="Views\Home\Switch.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

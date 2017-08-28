@@ -25,6 +25,7 @@ namespace CIMS.Models
         public string RoleName { get; set; }
         public string RoleDescription { get; set; }
         public bool Active { get; set; }
+        public Nullable<int> BranchID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Status> Status { get; set; }

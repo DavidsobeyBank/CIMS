@@ -42,15 +42,22 @@ namespace CIMS.Models
             {
                 username = GetANumber(username);
                 User user = db.Users.FirstOrDefault(u => u.Username.Equals(username, StringComparison.CurrentCultureIgnoreCase) || u.Email.Equals(username, StringComparison.CurrentCultureIgnoreCase));
+                try
+                {
+                    var roles = from ur in user.UserRoles
+                                from r in db.Roles
+                                where ur.RoleID == r.RoleID
+                                select r.RoleName;
 
-                var roles = from ur in user.UserRoles
-                            from r in db.Roles
-                            where ur.RoleID == r.RoleID
-                            select r.RoleName;
-                if (roles != null)
-                    return roles.ToArray();
-                else
+                    if (roles != null)
+                        return roles.ToArray();
+                    else
+                        return new string[] { };
+                }
+                catch(Exception)
+                {
                     return new string[] { };
+                }
             }
         }
 
