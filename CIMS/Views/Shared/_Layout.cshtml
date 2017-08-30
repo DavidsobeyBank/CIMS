@@ -33,21 +33,27 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="~/Roles">Manage Roles</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="~/Users">Manage Users</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="~/InstructionTypes">Instruction Types</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="~/Status">Status</a>
-                </li>
+                @if(User.IsInRole("Administrator"))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" href="~/Roles">Manage Roles</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="~/Users">Manage Users</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="~/InstructionTypes">Instruction Types</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="~/Status">Status</a>
+                    </li>
+                }
+                @if(User.IsInRole("Originator"))
+                {
                 <li class="nav-item">
                     <a class="nav-link" href="~/Instructions/Index">Instructions</a>
                 </li>
+                }
             </ul>
             <div class="pull-right">
                 <a class="nav-link" href="#" style="color:white">

@@ -97,3 +97,4 @@ C:\Dev\CIMS\CIMS\bin\PagedList.dll
 C:\Dev\CIMS\CIMS\bin\PagedList.Mvc.dll
 C:\Dev\CIMS\CIMS\bin\PagedList.xml
 C:\Dev\CIMS\CIMS\bin\PagedList.Mvc.xml
+C:\Dev\CIMS\CIMS\obj\Debug\CIMS.csproj.CoreCompileInputs.cache

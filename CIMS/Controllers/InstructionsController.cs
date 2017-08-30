@@ -50,8 +50,6 @@ namespace CIMS.Controllers
             ViewBag.ClientID = Convert.ToString(client.ClientID);
             ViewBag.BranchID = new SelectList(db.Branches.Where(I => I.Active), "BranchID", "BranchName");
             ViewBag.Branch = client.BranchID;
-            if (insID != null)
-            ViewBag.StatusID = new SelectList(StatusLooper(ID), "StatusID", "Name");
             ViewBag.CurrencyTo = new SelectList(db.Currencies.Where(I => I.Active), "CurrencyID", "CurrencyName");
             ViewBag.InstructionTypeID = new SelectList(db.InstructionTypes.Where(I => I.Active), "InstructionTypeID", "Name");
             ViewBag.InstructionType = db.InstructionTypes.Where(I => I.Active).First();
@@ -64,31 +62,76 @@ namespace CIMS.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "InstructionTypeID,Amount,ClientID,StatusID,CurrencyTo,BranchID,EERef")] Instruction instruction, string clientID, string comment)
+        public ActionResult Create([Bind(Include = "InstructionTypeID,Amount,ClientID,StatusID,CurrencyTo,BranchID,EERef")] Instruction instruction, string clientID, string comment, string statusID)
         {
             string UN = User.Identity.Name.Split('\\').Last();
+            if (String.IsNullOrEmpty(statusID))
+            {
+                try
+                {
+                    Client client = db.Clients.Find(Convert.ToInt32(clientID));
+                    ViewBag.Client = client.Name;
+                    ViewBag.ClientID = Convert.ToString(client.ClientID);
 
-            instruction.ClientID = Convert.ToInt32(clientID);
-            instruction.CreateUser = db.Users.Where(U => U.Username.Equals(UN, StringComparison.InvariantCultureIgnoreCase)).First().UserID;
-            instruction.FromUser = db.Users.Where(U => U.Username == UN).First().UserID;
-            instruction.CurrencyFrom = db.Currencies.First().CurrencyID;
-            instruction.CreateDate = DateTime.Now;
-            instruction.StatusID = findStatus(instruction.InstructionTypeID);
-            instruction.ToUser = 1;
+                    ViewBag.BranchID = new SelectList(db.Branches.Where(I => I.Active), "BranchID", "BranchName");
+                    ViewBag.Branch = client.BranchID;
 
-            db.Instructions.Add(instruction);
-            db.SaveChanges();
+                    ViewBag.CurrencyTo = new SelectList(db.Currencies.Where(I => I.Active), "CurrencyID", "CurrencyName");
 
-            Models.Action action = new Models.Action();
-            action.ActionDate = DateTime.Now;
-            action.Comment = comment;
-            action.InstructionID = db.Instructions.ToList().Last().InstructionID;
-            action.StatusID = findStatus(instruction.InstructionTypeID);
-            action.UserID = db.Users.Where(U => U.Username == UN).First().UserID;
-            db.Actions.Add(action);
-            db.SaveChanges();
+                    ViewBag.InstructionTypeID = new SelectList(db.InstructionTypes.Where(I => I.Active), "InstructionTypeID", "Name");
+                    ViewBag.InstructionType = db.InstructionTypes.Where(I => I.InstructionTypeID == instruction.InstructionTypeID).First();
 
-            return RedirectToAction("Index");
+                    InstructionTypesController InsT = new InstructionTypesController();
+                    List<Status> Statuses = InsT.StatusLooper(instruction.InstructionTypeID);
+                    ViewBag.StatusID = new SelectList(Statuses, "StatusID", "Name");
+                    ViewBag.Status = Statuses.ElementAt(2);
+
+                    return View();
+                }
+                catch(Exception E)
+                {
+                    return View();
+                }
+            }
+            else if(instruction.InstructionTypeID == 1)
+            {
+                Client client = db.Clients.Find(Convert.ToInt32(clientID));
+                ViewBag.Client = client.Name;
+                ViewBag.ClientID = Convert.ToString(client.ClientID);
+
+                ViewBag.BranchID = new SelectList(db.Branches.Where(I => I.Active), "BranchID", "BranchName");
+                ViewBag.Branch = client.BranchID;
+
+                ViewBag.CurrencyTo = new SelectList(db.Currencies.Where(I => I.Active), "CurrencyID", "CurrencyName");
+
+                ViewBag.InstructionTypeID = new SelectList(db.InstructionTypes.Where(I => I.Active), "InstructionTypeID", "Name");
+                ViewBag.InstructionType = db.InstructionTypes.Where(I => I.InstructionTypeID == instruction.InstructionTypeID).First();
+
+                return View();
+            }
+            else
+            {
+                instruction.ClientID = Convert.ToInt32(clientID);
+                instruction.CreateUser = db.Users.Where(U => U.Username.Equals(UN, StringComparison.InvariantCultureIgnoreCase)).First().UserID;
+                instruction.FromUser = db.Users.Where(U => U.Username == UN).First().UserID;
+                instruction.CurrencyFrom = db.Currencies.First().CurrencyID;
+                instruction.CreateDate = DateTime.Now;
+                instruction.ToUser = 1;
+
+                db.Instructions.Add(instruction);
+                db.SaveChanges();
+
+                Models.Action action = new Models.Action();
+                action.ActionDate = DateTime.Now;
+                action.Comment = comment;
+                action.InstructionID = db.Instructions.ToList().Last().InstructionID;
+                action.StatusID = instruction.StatusID;
+                action.UserID = db.Users.Where(U => U.Username == UN).First().UserID;
+                db.Actions.Add(action);
+                db.SaveChanges();
+
+                return RedirectToAction("Index");
+            }
         }
 
         // GET: Instructions/Edit/5
@@ -257,6 +300,48 @@ namespace CIMS.Controllers
             }
             return S;
         }
+
+        public ActionResult GetNext()
+        {
+            string UN = User.Identity.Name.Split('\\').Last();
+            User U = db.Users.Where(Us => Us.Username.Equals(UN, StringComparison.InvariantCultureIgnoreCase)).First();
+            List<UserRole> UR = db.UserRoles.Where(R => R.UserID == U.UserID).ToList();
+            List<Role> Roles = new List<Role>();
+            foreach (UserRole UserRole in UR)
+            {
+                Roles.Add(UserRole.Role);
+            }
+            List <Status> Statuses = new List<Status>();
+            foreach(Role Role in Roles)
+            {
+                foreach(Status S in Role.Status)
+                {
+                    Statuses.Add(S);
+                }
+            }
+            List<Instruction> instructions = new List<Instruction>();
+            foreach(Status S in Statuses)
+            {
+                List<Instruction> ins = db.Instructions.Where(I => I.ToUser == 1 && I.StatusID == S.StatusID || I.ToUser == U.UserID && I.StatusID == S.StatusID).ToList();
+                instructions.AddRange(ins);
+            }
+            return View(instructions);
+        }
        
+        public ActionResult Comment(int? id)
+        {
+            Instruction instruction = db.Instructions.Find(id);
+            ViewBag.Branch = instruction.Branch.BranchName;
+            ViewBag.Client = instruction.Client.AccountNumber + " - " + instruction.Client.Name;
+            ViewBag.CurrencyFrom = instruction.Currency.CurrencyName;
+            ViewBag.CurrencyTo = instruction.Currency1.CurrencyName;
+            ViewBag.InstructionType = instruction.InstructionType.Name;
+            ViewBag.FromUser = instruction.User.Name + " " + instruction.User.Surname;
+            List<Models.Action> action = db.Actions.Where(A => A.InstructionID == id).ToList();
+            ViewBag.Actions = action;
+            ViewBag.EERef = instruction.EERef;
+            return View(action);
+        }
     }
 }
+ 
