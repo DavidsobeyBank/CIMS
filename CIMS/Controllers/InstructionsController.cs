@@ -87,7 +87,7 @@ namespace CIMS.Controllers
 
                     return View();
                 }
-                catch(Exception E)
+                catch(Exception)
                 {
                     return View();
                 }

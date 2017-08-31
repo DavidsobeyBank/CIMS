@@ -191,7 +191,7 @@ namespace CIMS.Controllers
                 StatusOrder.Reverse();
                 return StatusOrder;
             }
-            catch(Exception E)
+            catch(Exception)
             {
                 List<Status> Statuses = db.Status.Where(S => S.InstructionTypeID == id && S.Active).ToList();
                 return Statuses;

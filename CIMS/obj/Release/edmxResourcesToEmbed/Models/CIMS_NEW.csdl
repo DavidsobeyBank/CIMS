@@ -1,0 +1,453 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="CIMS_NEWModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Action">
+    <Key>
+      <PropertyRef Name="ActionID" />
+    </Key>
+    <Property Name="ActionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ActionDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="InstructionID" Type="Int32" Nullable="false" />
+    <Property Name="UserID" Type="Int32" Nullable="false" />
+    <Property Name="StatusID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Instruction" Relationship="Self.FK_Action_Instruction" FromRole="Action" ToRole="Instruction" />
+    <NavigationProperty Name="Status" Relationship="Self.FK_Action_Status" FromRole="Action" ToRole="Status" />
+    <NavigationProperty Name="User" Relationship="Self.FK_Action_User" FromRole="Action" ToRole="User" />
+  </EntityType>
+  <EntityType Name="AuditLog">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Action" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="UserID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="User" Relationship="Self.FK_AuditLog_User" FromRole="AuditLog" ToRole="User" />
+  </EntityType>
+  <EntityType Name="Branch">
+    <Key>
+      <PropertyRef Name="BranchID" />
+    </Key>
+    <Property Name="BranchID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BranchName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Active" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Clients" Relationship="Self.FK_Client_Branch" FromRole="Branch" ToRole="Client" />
+    <NavigationProperty Name="Instructions" Relationship="Self.FK_Instruction_Branch" FromRole="Branch" ToRole="Instruction" />
+  </EntityType>
+  <EntityType Name="Client">
+    <Key>
+      <PropertyRef Name="ClientID" />
+    </Key>
+    <Property Name="ClientID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="AccountNumber" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Portfolio" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Sector" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Active" Type="Boolean" Nullable="false" />
+    <Property Name="CustomerNumber" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="BranchID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Branch" Relationship="Self.FK_Client_Branch" FromRole="Client" ToRole="Branch" />
+    <NavigationProperty Name="Instructions" Relationship="Self.FK_Instruction_Client" FromRole="Client" ToRole="Instruction" />
+  </EntityType>
+  <EntityType Name="Currency">
+    <Key>
+      <PropertyRef Name="CurrencyID" />
+    </Key>
+    <Property Name="CurrencyID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CurrencyName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CurrencyCode" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Active" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Instructions" Relationship="Self.FK_Instruction_Currency" FromRole="Currency" ToRole="Instruction" />
+    <NavigationProperty Name="Instructions1" Relationship="Self.FK_Instruction_Currency1" FromRole="Currency" ToRole="Instruction" />
+  </EntityType>
+  <EntityType Name="Instruction">
+    <Key>
+      <PropertyRef Name="InstructionID" />
+    </Key>
+    <Property Name="InstructionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="InstructionTypeID" Type="Int32" Nullable="false" />
+    <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CreateUser" Type="Int32" Nullable="false" />
+    <Property Name="StatusID" Type="Int32" Nullable="false" />
+    <Property Name="FromUser" Type="Int32" Nullable="false" />
+    <Property Name="ToUser" Type="Int32" Nullable="false" />
+    <Property Name="Amount" Type="Double" Nullable="false" />
+    <Property Name="ClientID" Type="Int32" Nullable="false" />
+    <Property Name="CurrencyFrom" Type="Int32" Nullable="false" />
+    <Property Name="CurrencyTo" Type="Int32" Nullable="false" />
+    <Property Name="BranchID" Type="Int32" Nullable="false" />
+    <Property Name="EERef" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Actions" Relationship="Self.FK_Action_Instruction" FromRole="Instruction" ToRole="Action" />
+    <NavigationProperty Name="Branch" Relationship="Self.FK_Instruction_Branch" FromRole="Instruction" ToRole="Branch" />
+    <NavigationProperty Name="Client" Relationship="Self.FK_Instruction_Client" FromRole="Instruction" ToRole="Client" />
+    <NavigationProperty Name="Currency" Relationship="Self.FK_Instruction_Currency" FromRole="Instruction" ToRole="Currency" />
+    <NavigationProperty Name="Currency1" Relationship="Self.FK_Instruction_Currency1" FromRole="Instruction" ToRole="Currency" />
+    <NavigationProperty Name="InstructionType" Relationship="Self.FK_Instruction_InstructionType" FromRole="Instruction" ToRole="InstructionType" />
+    <NavigationProperty Name="User" Relationship="Self.FK_Instruction_User" FromRole="Instruction" ToRole="User" />
+    <NavigationProperty Name="User1" Relationship="Self.FK_Instruction_User1" FromRole="Instruction" ToRole="User" />
+  </EntityType>
+  <EntityType Name="InstructionType">
+    <Key>
+      <PropertyRef Name="InstructionTypeID" />
+    </Key>
+    <Property Name="InstructionTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Cutoff" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Active" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Instructions" Relationship="Self.FK_Instruction_InstructionType" FromRole="InstructionType" ToRole="Instruction" />
+    <NavigationProperty Name="Status" Relationship="Self.FK_Status_InstructionType1" FromRole="InstructionType" ToRole="Status" />
+  </EntityType>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="RoleID" />
+    </Key>
+    <Property Name="RoleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="RoleDescription" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Active" Type="Boolean" Nullable="false" />
+    <Property Name="BranchID" Type="Int32" />
+    <NavigationProperty Name="Status" Relationship="Self.FK_Status_Role" FromRole="Role" ToRole="Status" />
+    <NavigationProperty Name="UserRoles" Relationship="Self.FK_UserRole_Role" FromRole="Role" ToRole="UserRole" />
+  </EntityType>
+  <EntityType Name="Status">
+    <Key>
+      <PropertyRef Name="StatusID" />
+    </Key>
+    <Property Name="StatusID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="InstructionTypeID" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Active" Type="Boolean" Nullable="false" />
+    <Property Name="NextStatus" Type="Int32" Nullable="false" />
+    <Property Name="RoleID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Actions" Relationship="Self.FK_Action_Status" FromRole="Status" ToRole="Action" />
+    <NavigationProperty Name="InstructionType" Relationship="Self.FK_Status_InstructionType1" FromRole="Status" ToRole="InstructionType" />
+    <NavigationProperty Name="Role" Relationship="Self.FK_Status_Role" FromRole="Status" ToRole="Role" />
+    <NavigationProperty Name="Status1" Relationship="Self.FK_Status_Status" FromRole="Status" ToRole="Status1" />
+    <NavigationProperty Name="Status2" Relationship="Self.FK_Status_Status" FromRole="Status1" ToRole="Status" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Surname" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Approved" Type="Int32" />
+    <Property Name="Active" Type="Boolean" Nullable="false" />
+    <Property Name="Username" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Actions" Relationship="Self.FK_Action_User" FromRole="User" ToRole="Action" />
+    <NavigationProperty Name="AuditLogs" Relationship="Self.FK_AuditLog_User" FromRole="User" ToRole="AuditLog" />
+    <NavigationProperty Name="Instructions" Relationship="Self.FK_Instruction_User" FromRole="User" ToRole="Instruction" />
+    <NavigationProperty Name="Instructions1" Relationship="Self.FK_Instruction_User1" FromRole="User" ToRole="Instruction" />
+    <NavigationProperty Name="UserRoles" Relationship="Self.FK_UserRole_User" FromRole="User" ToRole="UserRole" />
+  </EntityType>
+  <EntityType Name="UserRole">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="Int32" Nullable="false" />
+    <Property Name="RoleID" Type="Int32" Nullable="false" />
+    <Property Name="Active" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Role" Relationship="Self.FK_UserRole_Role" FromRole="UserRole" ToRole="Role" />
+    <NavigationProperty Name="User" Relationship="Self.FK_UserRole_User" FromRole="UserRole" ToRole="User" />
+  </EntityType>
+  <Association Name="FK_Action_Instruction">
+    <End Role="Instruction" Type="Self.Instruction" Multiplicity="1" />
+    <End Role="Action" Type="Self.Action" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Instruction">
+        <PropertyRef Name="InstructionID" />
+      </Principal>
+      <Dependent Role="Action">
+        <PropertyRef Name="InstructionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Action_Status">
+    <End Role="Status" Type="Self.Status" Multiplicity="1" />
+    <End Role="Action" Type="Self.Action" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Status">
+        <PropertyRef Name="StatusID" />
+      </Principal>
+      <Dependent Role="Action">
+        <PropertyRef Name="StatusID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Action_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="Action" Type="Self.Action" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Action">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AuditLog_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="AuditLog" Type="Self.AuditLog" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="AuditLog">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Client_Branch">
+    <End Role="Branch" Type="Self.Branch" Multiplicity="1" />
+    <End Role="Client" Type="Self.Client" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Branch">
+        <PropertyRef Name="BranchID" />
+      </Principal>
+      <Dependent Role="Client">
+        <PropertyRef Name="BranchID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Instruction_Branch">
+    <End Role="Branch" Type="Self.Branch" Multiplicity="1" />
+    <End Role="Instruction" Type="Self.Instruction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Branch">
+        <PropertyRef Name="BranchID" />
+      </Principal>
+      <Dependent Role="Instruction">
+        <PropertyRef Name="BranchID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Instruction_Client">
+    <End Role="Client" Type="Self.Client" Multiplicity="1" />
+    <End Role="Instruction" Type="Self.Instruction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Client">
+        <PropertyRef Name="ClientID" />
+      </Principal>
+      <Dependent Role="Instruction">
+        <PropertyRef Name="ClientID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Instruction_Currency">
+    <End Role="Currency" Type="Self.Currency" Multiplicity="1" />
+    <End Role="Instruction" Type="Self.Instruction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Currency">
+        <PropertyRef Name="CurrencyID" />
+      </Principal>
+      <Dependent Role="Instruction">
+        <PropertyRef Name="CurrencyFrom" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Instruction_Currency1">
+    <End Role="Currency" Type="Self.Currency" Multiplicity="1" />
+    <End Role="Instruction" Type="Self.Instruction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Currency">
+        <PropertyRef Name="CurrencyID" />
+      </Principal>
+      <Dependent Role="Instruction">
+        <PropertyRef Name="CurrencyTo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Instruction_InstructionType">
+    <End Role="InstructionType" Type="Self.InstructionType" Multiplicity="1" />
+    <End Role="Instruction" Type="Self.Instruction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="InstructionType">
+        <PropertyRef Name="InstructionTypeID" />
+      </Principal>
+      <Dependent Role="Instruction">
+        <PropertyRef Name="InstructionTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Instruction_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="Instruction" Type="Self.Instruction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Instruction">
+        <PropertyRef Name="FromUser" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Instruction_User1">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="Instruction" Type="Self.Instruction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Instruction">
+        <PropertyRef Name="ToUser" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Status_InstructionType1">
+    <End Role="InstructionType" Type="Self.InstructionType" Multiplicity="1" />
+    <End Role="Status" Type="Self.Status" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="InstructionType">
+        <PropertyRef Name="InstructionTypeID" />
+      </Principal>
+      <Dependent Role="Status">
+        <PropertyRef Name="InstructionTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Status_Role">
+    <End Role="Role" Type="Self.Role" Multiplicity="1" />
+    <End Role="Status" Type="Self.Status" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="RoleID" />
+      </Principal>
+      <Dependent Role="Status">
+        <PropertyRef Name="RoleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserRole_Role">
+    <End Role="Role" Type="Self.Role" Multiplicity="1" />
+    <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="RoleID" />
+      </Principal>
+      <Dependent Role="UserRole">
+        <PropertyRef Name="RoleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Status_Status">
+    <End Role="Status" Type="Self.Status" Multiplicity="1" />
+    <End Role="Status1" Type="Self.Status" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Status">
+        <PropertyRef Name="StatusID" />
+      </Principal>
+      <Dependent Role="Status1">
+        <PropertyRef Name="NextStatus" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserRole_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="UserRole">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="CIMS_NEWEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Actions" EntityType="Self.Action" />
+    <EntitySet Name="AuditLogs" EntityType="Self.AuditLog" />
+    <EntitySet Name="Branches" EntityType="Self.Branch" />
+    <EntitySet Name="Clients" EntityType="Self.Client" />
+    <EntitySet Name="Currencies" EntityType="Self.Currency" />
+    <EntitySet Name="Instructions" EntityType="Self.Instruction" />
+    <EntitySet Name="InstructionTypes" EntityType="Self.InstructionType" />
+    <EntitySet Name="Roles" EntityType="Self.Role" />
+    <EntitySet Name="Status" EntityType="Self.Status" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <EntitySet Name="Users" EntityType="Self.User" />
+    <EntitySet Name="UserRoles" EntityType="Self.UserRole" />
+    <AssociationSet Name="FK_Action_Instruction" Association="Self.FK_Action_Instruction">
+      <End Role="Instruction" EntitySet="Instructions" />
+      <End Role="Action" EntitySet="Actions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Action_Status" Association="Self.FK_Action_Status">
+      <End Role="Status" EntitySet="Status" />
+      <End Role="Action" EntitySet="Actions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Action_User" Association="Self.FK_Action_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Action" EntitySet="Actions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AuditLog_User" Association="Self.FK_AuditLog_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="AuditLog" EntitySet="AuditLogs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Client_Branch" Association="Self.FK_Client_Branch">
+      <End Role="Branch" EntitySet="Branches" />
+      <End Role="Client" EntitySet="Clients" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Instruction_Branch" Association="Self.FK_Instruction_Branch">
+      <End Role="Branch" EntitySet="Branches" />
+      <End Role="Instruction" EntitySet="Instructions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Instruction_Client" Association="Self.FK_Instruction_Client">
+      <End Role="Client" EntitySet="Clients" />
+      <End Role="Instruction" EntitySet="Instructions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Instruction_Currency" Association="Self.FK_Instruction_Currency">
+      <End Role="Currency" EntitySet="Currencies" />
+      <End Role="Instruction" EntitySet="Instructions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Instruction_Currency1" Association="Self.FK_Instruction_Currency1">
+      <End Role="Currency" EntitySet="Currencies" />
+      <End Role="Instruction" EntitySet="Instructions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Instruction_InstructionType" Association="Self.FK_Instruction_InstructionType">
+      <End Role="InstructionType" EntitySet="InstructionTypes" />
+      <End Role="Instruction" EntitySet="Instructions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Instruction_User" Association="Self.FK_Instruction_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Instruction" EntitySet="Instructions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Instruction_User1" Association="Self.FK_Instruction_User1">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Instruction" EntitySet="Instructions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Status_InstructionType1" Association="Self.FK_Status_InstructionType1">
+      <End Role="InstructionType" EntitySet="InstructionTypes" />
+      <End Role="Status" EntitySet="Status" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Status_Role" Association="Self.FK_Status_Role">
+      <End Role="Role" EntitySet="Roles" />
+      <End Role="Status" EntitySet="Status" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserRole_Role" Association="Self.FK_UserRole_Role">
+      <End Role="Role" EntitySet="Roles" />
+      <End Role="UserRole" EntitySet="UserRoles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Status_Status" Association="Self.FK_Status_Status">
+      <End Role="Status" EntitySet="Status" />
+      <End Role="Status1" EntitySet="Status" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserRole_User" Association="Self.FK_UserRole_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="UserRole" EntitySet="UserRoles" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
