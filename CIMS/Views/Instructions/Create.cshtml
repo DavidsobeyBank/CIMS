@@ -26,7 +26,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.InstructionTypeID, "Instruction Type", htmlAttributes: new { @class = "control-label col-md-12" })
                 <div class="col-md-10">
-                    @Html.DropDownList("InstructionTypeID", new SelectList(ViewBag.InstructionTypeID, "Value", "Text", ViewBag.InstructionType), htmlAttributes: new { @class = "form-control", @onchange = "form.submit();" })
+                    @Html.DropDownList("InstructionTypeID", new SelectList(ViewBag.InstructionTypeID, "Value", "Text", ViewBag.InstructionType), "-- Select --", htmlAttributes: new { @class = "form-control", @onchange = "form.submit();" })
                     @Html.ValidationMessageFor(model => model.InstructionTypeID, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -37,7 +37,7 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.StatusID, "Send To:", htmlAttributes: new { @class = "control-label col-md-12" })
                         <div class="col-md-10">
-                            @Html.DropDownList("StatusID", new SelectList(ViewBag.StatusID, "Value", "Text", ViewBag.Status) , htmlAttributes: new { @class = "form-control" })
+                            @Html.DropDownList("StatusID", new SelectList(ViewBag.StatusID, "Value", "Text", ViewBag.Status), "-- Select --", htmlAttributes: new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.StatusID, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -50,7 +50,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.BranchID, "Branch", htmlAttributes: new { @class = "control-label col-md-12" })
                 <div class="col-md-10">
-                    @Html.DropDownList("BranchID", new SelectList(ViewBag.BranchID, "Value", "Text", ViewBag.Branch), htmlAttributes: new { @class = "form-control" })
+                    @Html.DropDownList("BranchID", new SelectList(ViewBag.BranchID, "Value", "Text", ViewBag.Branch), "-- Select --", htmlAttributes: new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.BranchID, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -69,7 +69,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.CurrencyTo, "Cross Currency", htmlAttributes: new { @class = "control-label col-md-12" })
                 <div class="col-md-10">
-                    @Html.DropDownList("CurrencyTo", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.DropDownList("CurrencyTo", new SelectList(ViewBag.CurrencyTo, "Value", "Text"), "-- Select --", htmlAttributes: new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.CurrencyTo, "", new { @class = "text-danger" })
                 </div>
             </div>

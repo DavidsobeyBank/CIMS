@@ -6,7 +6,7 @@
 }
 
 
-@using (Html.BeginForm("Create", "Instructions", new { clientID = ViewBag.ClientID, InstructionTypeID = ViewBag.InstructionTypeID }, FormMethod.Post))
+@using (Html.BeginForm("Comment", "Instructions", new { InstructionID = ViewBag.Instruction }, FormMethod.Post))
 {
     @Html.AntiForgeryToken()
     <div class="col-lg-6">
@@ -16,7 +16,6 @@
                 @Html.Label("Client", htmlAttributes: new { @class = "control-label col-md-12" })
                 <div class="col-md-10">
                     @Html.TextBox("Client", (String)ViewBag.Client, htmlAttributes: new { @class = "form-control", @readonly = "readonly" })
-                    @*@Html.ValidationMessageFor("\", "", new { @class = "text-danger" })*@
                 </div>
             </div>
 
@@ -24,7 +23,6 @@
                 @Html.Label("Branch", htmlAttributes: new { @class = "control-label col-md-12" })
                 <div class="col-md-10">
                     @Html.TextBox("Branch", (String)ViewBag.Branch, htmlAttributes: new { @class = "form-control", @readonly = "readonly" })
-                    @*@Html.ValidationMessageFor("\", "", new { @class = "text-danger" })*@
                 </div>
             </div>
 
@@ -32,7 +30,6 @@
                 @Html.Label("Currency From:", htmlAttributes: new { @class = "control-label col-md-12" })
                 <div class="col-md-10">
                     @Html.TextBox("CurrencyFrom", (String)ViewBag.CurrencyFrom, htmlAttributes: new { @class = "form-control", @readonly = "readonly" })
-                    @*@Html.ValidationMessageFor("\", "", new { @class = "text-danger" })*@
                 </div>
             </div>
 
@@ -40,7 +37,6 @@
                 @Html.Label("Currency To:", htmlAttributes: new { @class = "control-label col-md-12" })
                 <div class="col-md-10">
                     @Html.TextBox("CurrencyTo", (String)ViewBag.CurrencyTo, htmlAttributes: new { @class = "form-control", @readonly = "readonly" })
-                    @*@Html.ValidationMessageFor("\", "", new { @class = "text-danger" })*@
                 </div>
             </div>
 
@@ -48,7 +44,6 @@
                 @Html.Label("Instruction Type:", htmlAttributes: new { @class = "control-label col-md-12" })
                 <div class="col-md-10">
                     @Html.TextBox("InstructionType", (String)ViewBag.InstructionType, htmlAttributes: new { @class = "form-control", @readonly = "readonly" })
-                    @*@Html.ValidationMessageFor("\", "", new { @class = "text-danger" })*@
                 </div>
             </div>
 
@@ -56,7 +51,6 @@
                 @Html.Label("From:", htmlAttributes: new { @class = "control-label col-md-12" })
                 <div class="col-md-10">
                     @Html.TextBox("FromUser", (String)ViewBag.FromUser, htmlAttributes: new { @class = "form-control", @readonly = "readonly" })
-                    @*@Html.ValidationMessageFor("\", "", new { @class = "text-danger" })*@
                 </div>
             </div>
 
@@ -64,19 +58,25 @@
                 @Html.Label("EE Reference Number:", htmlAttributes: new { @class = "control-label col-md-12" })
                 <div class="col-md-10">
                     @Html.TextBox("EERef", (String)ViewBag.EERef, htmlAttributes: new { @class = "form-control"})
-                    @*@Html.ValidationMessageFor("\", "", new { @class = "text-danger" })*@
                 </div>
             </div>
             @foreach (var item in Model)
             {
                 <div class="form-group">
-                    @Html.Label("Comment", "Comment: "+ item.User.Name, htmlAttributes: new { @class = "control-label col-md-12" })
+                    @Html.Label("Comment", "("+item.Status.Name+") "+ item.User.Name+"'s Comment:", htmlAttributes: new { @class = "control-label col-md-12" })
                     <div class="col-md-10">
                         @Html.DisplayFor(modelItem=>item.Comment, new { @class = "form-control" })
-                        @*@Html.ValidationMessageFor("\", "", new { @class = "text-danger" })*@
                     </div>
                 </div>
             }
+
+            <div class="form-group">
+                @Html.Label("Send To:", htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-md-10">
+                    @Html.DropDownList("StatusID", new SelectList(ViewBag.StatusID, "Value", "Text", ViewBag.Status), "-- Select --", htmlAttributes: new { @class = "form-control" })
+                </div>
+            </div>
+
             <div class="form-group">
                 @Html.Label("Comment", htmlAttributes: new { @class = "control-label col-md-12" })
                 <div class="col-md-10">

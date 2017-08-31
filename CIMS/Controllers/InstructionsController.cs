@@ -49,9 +49,8 @@ namespace CIMS.Controllers
             ViewBag.Client = client.Name;
             ViewBag.ClientID = Convert.ToString(client.ClientID);
             ViewBag.BranchID = new SelectList(db.Branches.Where(I => I.Active), "BranchID", "BranchName");
-            ViewBag.Branch = client.BranchID;
             ViewBag.CurrencyTo = new SelectList(db.Currencies.Where(I => I.Active), "CurrencyID", "CurrencyName");
-            ViewBag.InstructionTypeID = new SelectList(db.InstructionTypes.Where(I => I.Active), "InstructionTypeID", "Name");
+            ViewBag.InstructionTypeID = new SelectList(db.InstructionTypes.Where(I => I.Active && !I.Name.Equals("--")), "InstructionTypeID", "Name");
             ViewBag.InstructionType = db.InstructionTypes.Where(I => I.Active).First();
             return View();
             
@@ -331,17 +330,57 @@ namespace CIMS.Controllers
         public ActionResult Comment(int? id)
         {
             Instruction instruction = db.Instructions.Find(id);
+            ViewBag.Instruction = id;
             ViewBag.Branch = instruction.Branch.BranchName;
             ViewBag.Client = instruction.Client.AccountNumber + " - " + instruction.Client.Name;
             ViewBag.CurrencyFrom = instruction.Currency.CurrencyName;
             ViewBag.CurrencyTo = instruction.Currency1.CurrencyName;
             ViewBag.InstructionType = instruction.InstructionType.Name;
             ViewBag.FromUser = instruction.User.Name + " " + instruction.User.Surname;
+            InstructionTypesController InsT = new InstructionTypesController();
+            List<Status> Statuses = InsT.StatusLooper(instruction.InstructionTypeID);
+            ViewBag.StatusID = new SelectList(Statuses, "StatusID", "Name");
+            ViewBag.Status = Statuses.ElementAt(2);
+
             List<Models.Action> action = db.Actions.Where(A => A.InstructionID == id).ToList();
             ViewBag.Actions = action;
             ViewBag.EERef = instruction.EERef;
             return View(action);
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Comment(string comment, string EERef, int StatusID, int InstructionID)
+        {
+            Models.Action action = new Models.Action();
+
+            action.ActionDate = DateTime.Now;
+            action.Comment = comment;
+
+            Instruction ins = db.Instructions.Where(I => I.InstructionID == InstructionID).FirstOrDefault();
+
+            if (!ins.EERef.Equals(EERef))
+            {
+                ins.EERef = EERef;
+            }
+            ins.StatusID = StatusID;
+            db.Entry(ins).State = EntityState.Modified;
+
+
+            action.InstructionID = ins.InstructionID;
+
+            Status S = db.Status.Find(StatusID);
+            action.StatusID = S.StatusID;
+
+            string UN = User.Identity.Name.Split('\\').Last();
+            action.UserID = db.Users.Where(U => U.Username == UN).First().UserID;
+
+            db.Actions.Add(action);
+            db.SaveChanges();
+
+            return RedirectToAction("GetNext");
+        }
+
     }
 }
  
