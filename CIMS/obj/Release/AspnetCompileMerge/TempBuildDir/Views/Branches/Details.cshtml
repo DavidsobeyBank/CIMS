@@ -1,0 +1,25 @@
+﻿@model CIMS.Models.Branch
+
+@{
+    ViewBag.Title = "Branch Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    <h4>Branch</h4>
+    
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.BranchName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BranchName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.BranchID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

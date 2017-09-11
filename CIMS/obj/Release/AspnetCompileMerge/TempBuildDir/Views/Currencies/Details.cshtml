@@ -1,0 +1,33 @@
+﻿@model CIMS.Models.Currency
+
+@{
+    ViewBag.Title = "Currency Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    <h4>Currency</h4>
+    
+    <dl class="dl-horizontal">
+        <dt>
+            Currency Name
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CurrencyName)
+        </dd>
+
+        <dt>
+            Currency Code    
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CurrencyCode)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.CurrencyID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+
+    <script src="~/bower_components/jquery/dist/jquery.js"></script>
+    <script src="~/bower_components/tether/dist/js/tether.js"></script>
+    <script src="~/bower_components/popper.js/dist/umd/popper.js"></script>
+    <script src="~/bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="~/bower_components/jquery-ui/jquery-ui.min.js"></script>
+
+    <link href="~/bower_components/tether/dist/xcss/tether.css" rel="stylesheet" />
+    <link href="~/bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/bower_components/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <link href="~/Content/Site.css" rel="stylesheet" />
+</head>
+<body>
+    <nav class="navbar navbar-dark bg-primary margining">
+        <a class="navbar-brand" href="~/Home">
+            <img src="~/Images/Logo.png" style="width:42px; padding-top: 5px;" class="d-inline-block align-top img img-responsive" alt="">
+            <div class="d-inline">
+                <h3 style="display:inline">Standard Bank </h3>
+            </div>
+            <div style="padding-left:48px; margin-top: -24px;">
+                CIMS
+            </div>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                @if(User.IsInRole("Administrator"))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" href="~/Roles">Manage Roles</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="~/Users">Manage Users</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="~/InstructionTypes">Instruction Types</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="~/Status">Status</a>
+                    </li>
+                }
+                @if(User.IsInRole("Originator"))
+                {
+                <li class="nav-item">
+                    <a class="nav-link" href="~/Instructions/Index">Instructions</a>
+                </li>
+                }
+            </ul>
+            <div class="pull-right">
+                <a class="nav-link" href="#" style="color:white">
+                    @User.Identity.Name.Split('\\').Last()
+                </a>
+            </div>
+        </div>
+       
+    </nav>
+    
+        
+    <div class="container body-content">
+        <br />
+        <div class="card border-dark mb-3">
+            <div class="card-header">
+                <h2>@ViewBag.Title</h2>
+            </div>
+            <div class="card-body">
+                @RenderBody()
+            </div>  
+        </div>
+    </div>
+
+</body>
+</html>
+
+

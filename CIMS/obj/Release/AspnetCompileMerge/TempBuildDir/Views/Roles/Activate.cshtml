@@ -1,0 +1,40 @@
+﻿@model IEnumerable<CIMS.Models.Role>
+@{
+    ViewBag.Title = "Activate Role";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="d-inline">
+    <h2>Activate</h2>
+</div>
+<table class="table">
+    <tr>
+        <th>
+            Role Name
+        </th>
+        <th>
+            Role Description
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoleName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoleDescription)
+            </td>
+            <td>
+                @using (Html.BeginForm("Activate","Roles", new { id = item.RoleID }, FormMethod.Post ))
+                {
+                    @Html.AntiForgeryToken()
+                    <input type="submit" value="Activate" class="btn btn-outline-primary" /> 
+                }
+            </td>
+        </tr>
+    }
+</table>
+@Html.ActionLink("Back to List", "Index")

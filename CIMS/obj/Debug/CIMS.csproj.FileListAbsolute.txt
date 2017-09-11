@@ -50,6 +50,8 @@ C:\Dev\CIMS\CIMS\bin\Microsoft.Owin.Security.OAuth.dll
 C:\Dev\CIMS\CIMS\bin\Microsoft.Web.Infrastructure.dll
 C:\Dev\CIMS\CIMS\bin\Newtonsoft.Json.dll
 C:\Dev\CIMS\CIMS\bin\Owin.dll
+C:\Dev\CIMS\CIMS\bin\PagedList.dll
+C:\Dev\CIMS\CIMS\bin\PagedList.Mvc.dll
 C:\Dev\CIMS\CIMS\bin\System.Net.Http.Formatting.dll
 C:\Dev\CIMS\CIMS\bin\System.Web.Cors.dll
 C:\Dev\CIMS\CIMS\bin\System.Web.Helpers.dll
@@ -73,6 +75,8 @@ C:\Dev\CIMS\CIMS\bin\Microsoft.Owin.Cors.xml
 C:\Dev\CIMS\CIMS\bin\Microsoft.Owin.Security.xml
 C:\Dev\CIMS\CIMS\bin\Microsoft.Owin.Security.Cookies.xml
 C:\Dev\CIMS\CIMS\bin\Microsoft.Owin.Security.OAuth.xml
+C:\Dev\CIMS\CIMS\bin\PagedList.xml
+C:\Dev\CIMS\CIMS\bin\PagedList.Mvc.xml
 C:\Dev\CIMS\CIMS\bin\System.Net.Http.Formatting.xml
 C:\Dev\CIMS\CIMS\bin\System.Web.Http.xml
 C:\Dev\CIMS\CIMS\bin\System.Web.Http.Owin.xml
@@ -90,11 +94,7 @@ C:\Dev\CIMS\CIMS\bin\Microsoft.AI.DependencyCollector.xml
 C:\Dev\CIMS\CIMS\bin\Microsoft.AI.ServerTelemetryChannel.xml
 C:\Dev\CIMS\CIMS\bin\Microsoft.AI.WindowsServer.xml
 C:\Dev\CIMS\CIMS\bin\Microsoft.AI.Web.xml
+C:\Dev\CIMS\CIMS\obj\Debug\CIMS.csproj.CoreCompileInputs.cache
 C:\Dev\CIMS\CIMS\obj\Debug\CIMS.dll
 C:\Dev\CIMS\CIMS\obj\Debug\CIMS.pdb
 C:\Dev\CIMS\CIMS\obj\Debug\CIMS.csprojResolveAssemblyReference.cache
-C:\Dev\CIMS\CIMS\bin\PagedList.dll
-C:\Dev\CIMS\CIMS\bin\PagedList.Mvc.dll
-C:\Dev\CIMS\CIMS\bin\PagedList.xml
-C:\Dev\CIMS\CIMS\bin\PagedList.Mvc.xml
-C:\Dev\CIMS\CIMS\obj\Debug\CIMS.csproj.CoreCompileInputs.cache

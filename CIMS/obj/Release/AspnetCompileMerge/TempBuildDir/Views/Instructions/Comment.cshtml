@@ -1,0 +1,103 @@
+﻿@model IEnumerable<CIMS.Models.Action>
+
+@{
+    ViewBag.Title = "Comment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@using (Html.BeginForm("Comment", "Instructions", new { InstructionID = ViewBag.Instruction }, FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <div class="col-lg-6">
+        <div class="form-horizontal">
+
+            <div class="form-group">
+                @Html.Label("Client", htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-md-10">
+                    @Html.TextBox("Client", (String)ViewBag.Client, htmlAttributes: new { @class = "form-control", @readonly = "readonly" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Branch", htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-md-10">
+                    @Html.TextBox("Branch", (String)ViewBag.Branch, htmlAttributes: new { @class = "form-control", @readonly = "readonly" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Currency From:", htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-md-10">
+                    @Html.TextBox("CurrencyFrom", (String)ViewBag.CurrencyFrom, htmlAttributes: new { @class = "form-control", @readonly = "readonly" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Currency To:", htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-md-10">
+                    @Html.TextBox("CurrencyTo", (String)ViewBag.CurrencyTo, htmlAttributes: new { @class = "form-control", @readonly = "readonly" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Instruction Type:", htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-md-10">
+                    @Html.TextBox("InstructionType", (String)ViewBag.InstructionType, htmlAttributes: new { @class = "form-control", @readonly = "readonly" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("From:", htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-md-10">
+                    @Html.TextBox("FromUser", (String)ViewBag.FromUser, htmlAttributes: new { @class = "form-control", @readonly = "readonly" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("EE Reference Number:", htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-md-10">
+                    @Html.TextBox("EERef", (String)ViewBag.EERef, htmlAttributes: new { @class = "form-control"})
+                </div>
+            </div>
+            @foreach (var item in Model)
+            {
+                <div class="form-group">
+                    @Html.Label("Comment", "("+item.Status.Name+") "+ item.User.Name+"'s Comment:", htmlAttributes: new { @class = "control-label col-md-12" })
+                    <div class="col-md-10">
+                        @Html.DisplayFor(modelItem=>item.Comment, new { @class = "form-control" })
+                    </div>
+                </div>
+            }
+
+            <div class="form-group">
+                @Html.Label("Send To:", htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-md-10">
+                    @Html.DropDownList("StatusID", new SelectList(ViewBag.StatusID, "Value", "Text", ViewBag.Status), "-- Select --", htmlAttributes: new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Comment", htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-md-10">
+                    @Html.TextArea("comment", null, new { @class = "form-control" })
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-outline-primary" />
+            </div>
+        </div>
+    </div>
+
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+

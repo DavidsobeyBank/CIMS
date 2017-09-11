@@ -1,0 +1,50 @@
+﻿body {
+    /*background: grey;*/
+    /*background-image: url('../Images/dark_mosaic.png');*/
+}
+a {
+    outline: none !important;
+}
+button {
+    outline: none!important;
+}
+
+.btn-outline-secondary {
+    color: #000;
+    border-color: #090909;
+}
+.btn-outline-secondary:hover {
+    background-color: #757474;
+    border-color: #000;
+}
+.btnsmall {
+    width: 30px;
+    padding: 2px;
+    height: 30px;
+}
+.page-item > a {
+    position: relative;
+    display: block;
+    padding: 0.5rem 0.75rem;
+    margin-left: -1px;
+    line-height: 1.25;
+    color: #1669c3 ;
+    background-color: #fff;
+    border: 1px solid #ddd;
+}
+
+.page-item.active > a {
+    color: #fff;
+    background-color: rgb(2, 117, 216);
+    border: 1px solid black;
+    z-index: 2;
+    border-radius: 2px;
+}
+.card-header {
+    background-color: #1669c3  !important;
+    color: white;
+}
+
+.margining{
+    border-bottom: 1px solid black;
+}

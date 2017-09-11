@@ -1,0 +1,58 @@
+﻿@model CIMS.Models.Status
+
+@{
+    ViewBag.Title = "Instruction Status Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    <h4></h4>
+    
+    <dl class="dl-horizontal">
+
+        <dt>
+            Instruction Type
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.InstructionType.Name)
+        </dd>
+
+        <dt>
+            Role
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Role.RoleName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            Next Status
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Status2.Name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.StatusID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

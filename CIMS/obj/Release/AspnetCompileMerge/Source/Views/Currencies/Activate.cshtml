@@ -1,0 +1,39 @@
+﻿@model IEnumerable<CIMS.Models.Currency>
+@{
+    ViewBag.Title = "Activate Currency";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<table class="table">
+    <tr>
+        <th>
+            Currency Name
+        </th>
+        <th>
+            Currency Code
+        </th>
+        <th>
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CurrencyName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CurrencyCode)
+            </td>
+            <td>
+                @using (Html.BeginForm("Activate", "Currencies", new { id = item.CurrencyID }, FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <input type="submit" value="Reactivate" class="btn btn-outline-primary" />
+                }
+            </td>
+        </tr>
+    }
+
+</table>
+@Html.ActionLink("Back to List", "Index")

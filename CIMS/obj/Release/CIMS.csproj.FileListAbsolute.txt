@@ -97,3 +97,4 @@ C:\Dev\CIMS\CIMS\bin\Microsoft.AI.Web.xml
 C:\Dev\CIMS\CIMS\obj\Release\CIMS.csproj.CoreCompileInputs.cache
 C:\Dev\CIMS\CIMS\obj\Release\CIMS.dll
 C:\Dev\CIMS\CIMS\obj\Release\CIMS.pdb
+C:\Dev\CIMS\CIMS\obj\Release\CIMS.csprojResolveAssemblyReference.cache

@@ -1,0 +1,36 @@
+﻿@model IEnumerable<CIMS.Models.Branch>
+
+@{
+    ViewBag.Title = "Branch Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="d-inline">
+    <h2 class="d-inline">Index</h2>
+
+    <p class="pull-right d-inline">
+        @Html.ActionLink("Create", "Create", null, new { @class = "btn btn-outline-success" })
+        @Html.ActionLink("Reactivate", "Activate", null, new { @class = "btn btn-outline-primary" })
+    </p>
+</div>
+<table class="table">
+    <tr>
+        <th>
+            Branch Name
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.BranchName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.BranchID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.BranchID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.BranchID })
+        </td>
+    </tr>
+}
+
+</table>

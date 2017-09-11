@@ -1,0 +1,35 @@
+﻿@model CIMS.Models.Role
+
+@{
+    ViewBag.Title = "Delete Role";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3>Are you sure you want to delete this Role?</h3>
+<div>
+    
+    <dl class="dl-horizontal">
+        <dt>
+            <label class="control-label col-md-2" for="RoleName">Role Name</label>
+        </dt>
+        <dd>
+            <label class="control-label col">@Html.DisplayFor(model => model.RoleName)</label>
+        </dd>
+        <dt>
+            <label class="control-label col-md-2" for="RoleDescription">Role Description</label>
+        </dt>
+        <dd>
+            <label class="control-label col">@Html.DisplayFor(model => model.RoleDescription)</label>
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-outline-danger" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>
